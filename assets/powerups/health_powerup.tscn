@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://j7wsvui2uere"]
+
+[ext_resource type="Script" path="res://scripts/powerups/health.gd" id="1_hmnmm"]
+[ext_resource type="Texture2D" uid="uid://cvoulgchf5k1v" path="res://assets/powerups/health.png" id="2_nyrqe"]
+
+[node name="HealthPowerup" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_hmnmm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_nyrqe")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-1, -12, -5, -12, -5, -11, -8, -11, -8, -10, -10, -10, -10, -9, -11, -9, -11, -8, -12, -8, -12, 1, -11, 1, -11, 2, -9, 2, -9, 9, -8, 9, -8, 10, -6, 10, -6, 12, -5, 12, -5, 13, 5, 13, 5, 12, 6, 12, 6, 10, 8, 10, 8, 9, 9, 9, 9, 2, 11, 2, 11, 1, 12, 1, 12, -8, 11, -8, 11, -9, 10, -9, 10, -10, 8, -10, 8, -11, 5, -11, 5, -12)

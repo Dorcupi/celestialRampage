@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkdxdbil6koas"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_j683g"]
+
+[node name="Bullet" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+motion_mode = 1
+script = ExtResource("1_j683g")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.0196078, 0.160784, 0.619608, 1)
+polygon = PackedVector2Array(30, 0, 0, 18, -30, 0, 0, -18)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -18, 30, 0, 0, 18, -30, 0)

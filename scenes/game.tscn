@@ -1,0 +1,188 @@
+[gd_scene load_steps=10 format=3 uid="uid://0mgtt1wpiua0"]
+
+[ext_resource type="PackedScene" uid="uid://c6utkoh2wobe0" path="res://characters/player.tscn" id="1_3ds0p"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_q0xx5"]
+[ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="3_gghcc"]
+[ext_resource type="FontFile" uid="uid://cqfkdwa8sxqea" path="res://fonts/PixeloidSansBold-PKnYd.ttf" id="4_02fjl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aotsu"]
+font = ExtResource("3_gghcc")
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0.0313726, 0.439216, 0.686275, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_joe8u"]
+font = ExtResource("4_02fjl")
+font_size = 50
+outline_size = 5
+outline_color = Color(0, 0, 0, 0)
+shadow_size = 22
+shadow_color = Color(0, 0, 0, 0.215686)
+shadow_offset = Vector2(3, 2)
+
+[sub_resource type="Animation" id="Animation_v72ci"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Wave:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Wave:label_settings:font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Wave:label_settings:outline_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_csqc3"]
+resource_name = "wave_fade_in"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Wave:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Wave:label_settings:font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.6, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Wave:label_settings:outline_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.6, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uj7bu"]
+_data = {
+"RESET": SubResource("Animation_v72ci"),
+"wave_fade_in": SubResource("Animation_csqc3")
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_q0xx5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -2730.0
+offset_top = -1981.0
+offset_right = 3227.0
+offset_bottom = 2580.0
+color = Color(0.00784314, 0.121569, 0.247059, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_3ds0p")]
+position = Vector2(532, 307)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_scale = 1000.0
+
+[node name="BugFixer" type="ColorRect" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
+
+[node name="HealthBarA" type="ColorRect" parent="CanvasLayer"]
+offset_left = 29.0
+offset_top = 16.0
+offset_right = 358.0
+offset_bottom = 83.0
+
+[node name="HealthBarB" type="ColorRect" parent="CanvasLayer"]
+offset_left = 44.0
+offset_top = 30.0
+offset_right = 344.0
+offset_bottom = 69.0
+color = Color(0.741176, 0, 0, 1)
+
+[node name="Health" type="Label" parent="CanvasLayer"]
+offset_left = 135.0
+offset_top = 35.0
+offset_right = 254.0
+offset_bottom = 69.0
+text = "100/100"
+label_settings = SubResource("LabelSettings_aotsu")
+
+[node name="Wave" type="Label" parent="CanvasLayer"]
+offset_left = 462.0
+offset_top = 22.0
+offset_right = 690.0
+offset_bottom = 87.0
+text = "WAVE 1"
+label_settings = SubResource("LabelSettings_joe8u")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_uj7bu")
+}
+
+[node name="Border" type="Polygon2D" parent="."]
+color = Color(0.196078, 0.870588, 0.541176, 1)
+invert_enabled = true
+invert_border = 5026.9
+polygon = PackedVector2Array(-2364, -274, -2383, 868, -1403, 2019, 1889, 2010, 2945, 1011, 3002, -331, 1755, -1549, -1118, -1596)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Border"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border/StaticBody2D"]
+polygon = PackedVector2Array(-3109, -2313, -3071, 2754, 3710, 2754, 3748, -2288, 1755, -1551, 2986, -370, 2961, 1039, 1958, 1992, -1446, 1979, -2423, 938, -2436, -218, -1128, -1564, 1742, -1538, 3761, -2275)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(446, 946)
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.7
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
