@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cvoulgchf5k1v" path="res://assets/powerups/health.png" id="2_nyrqe"]
 
 [node name="HealthPowerup" type="CharacterBody2D"]
+scale = Vector2(3, 3)
 motion_mode = 1
 script = ExtResource("1_hmnmm")
 

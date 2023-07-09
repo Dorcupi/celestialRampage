@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6utkoh2wobe0"]
+[gd_scene load_steps=5 format=3 uid="uid://c6utkoh2wobe0"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_526ke"]
+[ext_resource type="Script" path="res://addons/shaker/shaker.gd" id="2_dwqnm"]
 
 [sub_resource type="Gradient" id="Gradient_gu1x6"]
 offsets = PackedFloat32Array(0, 0.509934)
 colors = PackedColorArray(0.69589, 0.435282, 1.92523e-07, 1, 0.961518, 4.45209e-06, 9.62615e-07, 1)
+
+[sub_resource type="Curve" id="Curve_sj4j1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.208738, 0), -5.00405, 0.0, 0, 0]
+point_count = 2
 
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
@@ -21,7 +26,7 @@ scale = Vector2(1, 1.05)
 polygon = PackedVector2Array(-52, 9, -52, -29.5238, -6, -60, 37, -37, 41, 10, 21, 25.7143, -3, 12, -25, 27.6191)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.6, 0.6)
+zoom = Vector2(0.7, 0.7)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
@@ -42,3 +47,12 @@ scale_amount_max = 21.21
 color = Color(0.745098, 0.470588, 0.0823529, 1)
 color_ramp = SubResource("Gradient_gu1x6")
 hue_variation_max = 1.0
+
+[node name="Shaker" type="Node" parent="." node_paths=PackedStringArray("target_node")]
+script = ExtResource("2_dwqnm")
+target_node = NodePath("../Camera2D")
+target_property = &"offset"
+min_value = 10.0
+max_value = 30.0
+duration = 0.2
+fall_off = SubResource("Curve_sj4j1")

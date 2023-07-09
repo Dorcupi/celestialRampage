@@ -30,6 +30,8 @@ func hit(damage):
 	health = health - damage
 	if health <= 0:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
+	else:
+		$Shaker.start()
 
 func get_input():
 	var input_dir = Input.get_vector(left_keybind, right_keybind, forward_keybind, backward_keybind)
@@ -70,7 +72,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed(shoot_keybind):
 		var b = bullet.instantiate()
-		b.start($ShootPos.global_position, rotation, attackDamage)
+		b.start($ShootPos.global_position, rotation, attackDamage, self)
 		get_tree().root.add_child(b)
 	
 	move_and_slide()

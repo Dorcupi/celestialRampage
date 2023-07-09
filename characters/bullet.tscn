@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_j683g"]
 
 [node name="Bullet" type="CharacterBody2D"]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.8, 0.8)
 motion_mode = 1
 script = ExtResource("1_j683g")
 

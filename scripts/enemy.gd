@@ -78,5 +78,5 @@ func hit(damage):
 
 func _on_shoot_timer_timeout():
 	var b = bullet.instantiate()
-	b.start($ShootPos.global_position, rotation, attackDamage)
+	b.start($ShootPos.global_position, rotation, attackDamage, self)
 	get_tree().root.add_child(b)

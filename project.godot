@@ -18,9 +18,13 @@ config/icon="res://icon.svg"
 
 GGS="*res://addons/ggs/classes/ggs_globals.gd"
 
+[display]
+
+window/stretch/aspect="ignore"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdfxr/plugin.cfg", "res://addons/ggs/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdfxr/plugin.cfg", "res://addons/ggs/plugin.cfg", "res://addons/shaker/plugin.cfg")
 
 [input]
 
