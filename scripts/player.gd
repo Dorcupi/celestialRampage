@@ -25,6 +25,10 @@ var attackDamage = 5
 
 func _ready():
 	health = maxHealth
+	
+	var clonedMa =$Polygon2D.get_material().duplicate()
+	
+	$Polygon2D.set_material(clonedMa)
 
 func hit(damage):
 	health = health - damage
@@ -32,6 +36,9 @@ func hit(damage):
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 	else:
 		$Shaker.start()
+		$HurtSound.play()
+		$Polygon2D.get_material().set_shader_parameter('active',true)
+		$FlashTimer.start()
 
 func get_input():
 	var input_dir = Input.get_vector(left_keybind, right_keybind, forward_keybind, backward_keybind)
@@ -74,5 +81,10 @@ func _physics_process(delta):
 		var b = bullet.instantiate()
 		b.start($ShootPos.global_position, rotation, attackDamage, self)
 		get_tree().root.add_child(b)
+		$ShootSound.play()
 	
 	move_and_slide()
+
+
+func _on_flash_timer_timeout():
+	$Polygon2D.get_material().set_shader_parameter('active',false)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://0mgtt1wpiua0"]
+[gd_scene load_steps=11 format=3 uid="uid://0mgtt1wpiua0"]
 
 [ext_resource type="PackedScene" uid="uid://c6utkoh2wobe0" path="res://characters/player.tscn" id="1_3ds0p"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_q0xx5"]
 [ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="3_gghcc"]
 [ext_resource type="FontFile" uid="uid://cqfkdwa8sxqea" path="res://fonts/PixeloidSansBold-PKnYd.ttf" id="4_02fjl"]
+[ext_resource type="AudioStream" uid="uid://cq3wyvom31kbl" path="res://sounds/death.sfxr" id="5_45x44"]
 
 [sub_resource type="Animation" id="Animation_v72ci"]
 length = 0.001
@@ -167,12 +168,14 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="HealthBarA" type="ColorRect" parent="CanvasLayer/Control2"]
+layout_mode = 0
 offset_left = 273.0
 offset_top = 131.0
 offset_right = 602.0
 offset_bottom = 198.0
 
 [node name="HealthBarB" type="ColorRect" parent="CanvasLayer/Control2"]
+layout_mode = 0
 offset_left = 288.0
 offset_top = 145.0
 offset_right = 588.0
@@ -180,6 +183,7 @@ offset_bottom = 184.0
 color = Color(0.741176, 0, 0, 1)
 
 [node name="Health" type="Label" parent="CanvasLayer/Control2"]
+layout_mode = 0
 offset_left = 379.0
 offset_top = 150.0
 offset_right = 498.0
@@ -211,6 +215,9 @@ wait_time = 0.7
 [node name="PowerupTimer" type="Timer" parent="."]
 wait_time = 50.0
 autostart = true
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_45x44")
 
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

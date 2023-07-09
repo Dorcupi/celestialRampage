@@ -1,6 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://6bp6d7upx2ej"]
+[gd_scene load_steps=6 format=3 uid="uid://6bp6d7upx2ej"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_e2ffx"]
+[ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="2_202pp"]
+[ext_resource type="AudioStream" uid="uid://drdscmxwhx8yv" path="res://sounds/hurt2.sfxr" id="3_cfldy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lieqg"]
+shader = ExtResource("2_202pp")
+shader_parameter/active = false
+shader_parameter/tint = Color(0, 0.356863, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_gu1x6"]
 offsets = PackedFloat32Array(0, 0.509934)
@@ -12,11 +19,13 @@ motion_mode = 1
 script = ExtResource("1_e2ffx")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_lieqg")
 rotation = 1.5708
 color = Color(0.8, 0.160784, 0.211765, 1)
 polygon = PackedVector2Array(-52, 9, -52, -31, -6, -63, 37, -37, 41, 10, 21, 26, -3, 12, -25, 29)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 rotation = 1.5708
 scale = Vector2(1, 1.05)
 polygon = PackedVector2Array(-52, 9, -52, -29.5238, -6, -60, 37, -37, 41, 10, 21, 25.7143, -3, 12, -25, 27.6191)
@@ -42,4 +51,13 @@ hue_variation_max = 1.0
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_cfldy")
+volume_db = -2.0
+
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]

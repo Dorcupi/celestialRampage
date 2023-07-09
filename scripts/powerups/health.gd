@@ -11,7 +11,7 @@ func _physics_process(delta):
 		queue_free()
 	
 func powerup(affecting):
-	affecting.health += randi_range(15, 30)
+	affecting.health += randi_range(25, 50)
 	if affecting.health >= affecting.maxHealth:
 		affecting.health = affecting.maxHealth
 		

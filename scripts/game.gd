@@ -38,6 +38,9 @@ func summon_enemy():
 	
 	e.position.y = y
 	
+	var clonedMa = e.get_node("Polygon2D").get_material().duplicate()
+	e.get_node("Polygon2D").set_material(clonedMa)
+	
 	add_child(e)
 	
 	print("SUCCESS")

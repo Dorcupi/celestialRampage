@@ -73,10 +73,19 @@ func hit(damage):
 	health = health - damage
 	if health <= 0:
 		get_parent().enemiesKilled += 1
+		get_parent().get_node("DeathSound").play()
 		queue_free()
+	else:
+		$Polygon2D.get_material().set_shader_parameter('active',true)
+		$FlashTimer.start()
+		$HurtSound.play()
 
 
 func _on_shoot_timer_timeout():
 	var b = bullet.instantiate()
 	b.start($ShootPos.global_position, rotation, attackDamage, self)
 	get_tree().root.add_child(b)
+
+
+func _on_flash_timer_timeout():
+	$Polygon2D.get_material().set_shader_parameter('active',false)
