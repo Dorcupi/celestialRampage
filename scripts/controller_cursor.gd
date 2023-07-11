@@ -13,11 +13,11 @@ extends CharacterBody2D
 
 var mouse_used = true
 
-var mouse_click = InputEventAction.new()
+var evt := InputEventMouseButton.new()
 
-func _ready():
-	mouse_click.action = "InputEventMouseButton"
-	mouse_click.pressed = true
+var canMouseClick = true
+
+var canMouseRelease = false
 
 func _input(event):
 	if event is InputEventMouseMotion and event.relative or event is InputEventKey:
@@ -25,12 +25,25 @@ func _input(event):
 	if event is InputEventJoypadMotion or event is InputEventJoypadButton:
 		mouse_used = false
 		
-	if Input.is_action_just_pressed(click_keybind):
-		Input.parse_input_event(mouse_click)
-		mouse_click.pressed = false
-		Input.parse_input_event(mouse_click)
+	if Input.is_action_pressed(click_keybind):
+		if canMouseClick == true:
+			canMouseClick = false
+			canMouseRelease = true
+			evt.button_index = MOUSE_BUTTON_LEFT
+			evt.position = get_global_position()
+			evt.pressed = true
+			Input.parse_input_event(evt)
+		
+	if Input.is_action_just_released(click_keybind):
+		if canMouseRelease == true:
+			canMouseRelease = false
+			evt.button_index = MOUSE_BUTTON_LEFT
+			evt.position = get_global_position()
+			evt.pressed = false
+			Input.parse_input_event(evt)
+			canMouseClick = true
 
-func _physics_process(delta):
+func _process(delta):
 	
 	var inputDir = Input.get_vector(left_keybind, right_keybind, forward_keybind, backward_keybind)
 	
@@ -42,3 +55,4 @@ func _physics_process(delta):
 		pass
 	else:
 		Input.warp_mouse(global_position)
+

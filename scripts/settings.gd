@@ -1,5 +1,7 @@
 extends Node2D
 
+var fadeForwards = true
+
 func fullscreenCheck():
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		$CanvasLayer/Control/VBoxContainer/FullscreenButton.button_pressed = true
@@ -12,6 +14,8 @@ func _ready():
 	$CanvasLayer/Control/VBoxContainer/CRTEffectButton.button_pressed = GameData.crtShader
 	
 	fullscreenCheck()
+	
+	fadeForwards = true
 	
 	$AnimationPlayer.play("fade_out")
 
@@ -31,14 +35,26 @@ func _on_crt_effect_button_toggled(button_pressed):
 
 func _on_fullscreen_button_toggled(button_pressed):
 	
+	GameData.fullscreen = button_pressed
+	
 	if button_pressed == false:
 		DisplayServer.window_set_mode(GameData.lastMode)
 	else:
 		GameData.lastMode = DisplayServer.window_get_mode()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
-	GameData.fullscreen = button_pressed
+	
 
 
 func _on_rumble_button_toggled(button_pressed):
 	GameData.controllerRumble = button_pressed
+
+
+func _on_exit_button_up():
+	fadeForwards = false
+	$AnimationPlayer.play_backwards("fade_out")
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if fadeForwards == false:
+		get_tree().change_scene_to_file(GameData.lastScene)

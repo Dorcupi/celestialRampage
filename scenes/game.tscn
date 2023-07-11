@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://0mgtt1wpiua0"]
+[gd_scene load_steps=18 format=3 uid="uid://0mgtt1wpiua0"]
 
 [ext_resource type="PackedScene" uid="uid://c6utkoh2wobe0" path="res://characters/player.tscn" id="1_3ds0p"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_q0xx5"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://vd2ofviu1q4i" path="res://assets/noisespace.tres" id="4_r14gi"]
 [ext_resource type="AudioStream" uid="uid://cq3wyvom31kbl" path="res://sounds/death.sfxr" id="5_45x44"]
 [ext_resource type="AudioStream" uid="uid://dgwrb3nlof23v" path="res://sounds/powerup1.sfxr" id="6_q88lu"]
+[ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="7_8ifsp"]
+[ext_resource type="AudioStream" uid="uid://bqfikjlgkcrf5" path="res://music/CSRampage_Loop_Song_A.mp3" id="8_qv00o"]
 
 [sub_resource type="Animation" id="Animation_v72ci"]
 length = 0.001
@@ -121,10 +123,41 @@ shadow_color = Color(0, 0, 0, 0.152941)
 shadow_size = 9
 shadow_offset = Vector2(5, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uedl1"]
+content_margin_top = 6.0
+content_margin_bottom = 8.0
+bg_color = Color(0.168627, 0.00784314, 0.258824, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_el7br"]
+content_margin_top = 6.0
+content_margin_bottom = 8.0
+bg_color = Color(0.356863, 0.0352941, 0.521569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1n5s"]
+content_margin_top = 6.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0823529, 0.00392157, 0.141176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 10
+
 [node name="Node2D" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_q0xx5")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+process_mode = 1
 texture_repeat = 2
 offset_left = -2730.0
 offset_top = -1981.0
@@ -133,9 +166,11 @@ offset_bottom = 2580.0
 color = Color(0.00784314, 0.121569, 0.247059, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_3ds0p")]
+process_mode = 1
 position = Vector2(532, 307)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 1
 follow_viewport_scale = 1000.0
 
 [node name="BugFixer" type="ColorRect" parent="CanvasLayer"]
@@ -204,12 +239,14 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_dhmnl")
 value = 37.0
 
 [node name="Noise" type="Sprite2D" parent="."]
+process_mode = 1
 texture_repeat = 2
 position = Vector2(360, 161)
 scale = Vector2(6, 6)
 texture = ExtResource("4_r14gi")
 
 [node name="Border" type="Polygon2D" parent="."]
+process_mode = 1
 texture_repeat = 3
 color = Color(0.196078, 0.870588, 0.541176, 1)
 invert_enabled = true
@@ -223,25 +260,109 @@ visible = false
 polygon = PackedVector2Array(-3109, -2313, -3071, 2754, 3710, 2754, 3748, -2288, 1755, -1551, 2986, -370, 2961, 1039, 1958, 1992, -1446, 1979, -2423, 938, -2436, -218, -1128, -1564, 1742, -1538, 3761, -2275)
 
 [node name="Marker2D" type="Marker2D" parent="."]
+process_mode = 1
 position = Vector2(446, 946)
 
 [node name="CooldownTimer" type="Timer" parent="."]
+process_mode = 1
 wait_time = 5.0
 one_shot = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
+process_mode = 1
 wait_time = 0.7
 
 [node name="PowerupTimer" type="Timer" parent="."]
+process_mode = 1
 wait_time = 50.0
 autostart = true
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 1
 stream = ExtResource("5_45x44")
 
 [node name="PowerupSound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 1
 stream = ExtResource("6_q88lu")
+
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="PauseLayer"]
+offset_left = -2008.0
+offset_top = -1261.0
+offset_right = 2461.0
+offset_bottom = 1607.0
+color = Color(0, 0, 0, 0.858824)
+
+[node name="Control" type="Control" parent="PauseLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -813.0
+offset_top = -451.5
+offset_right = 813.0
+offset_bottom = 451.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UnpauseButton" type="Button" parent="PauseLayer/Control"]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 433.0
+offset_right = 1060.0
+offset_bottom = 521.0
+theme_override_fonts/font = ExtResource("7_8ifsp")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_uedl1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_el7br")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a1n5s")
+text = "Unpause"
+
+[node name="ExitButton" type="Button" parent="PauseLayer/Control"]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 550.0
+offset_right = 1060.0
+offset_bottom = 638.0
+theme_override_fonts/font = ExtResource("7_8ifsp")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_uedl1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_el7br")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a1n5s")
+text = "Exit"
+
+[node name="Paused" type="Label" parent="PauseLayer/Control"]
+process_mode = 3
+layout_mode = 0
+offset_left = 671.0
+offset_top = 324.5
+offset_right = 968.0
+offset_bottom = 389.5
+text = "Paused"
+label_settings = SubResource("LabelSettings_joe8u")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("8_qv00o")
+volume_db = 1.0
+
+[node name="MusicTimer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 2.0
+one_shot = true
 
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupTimer" to="." method="_on_powerup_timer_timeout"]
+[connection signal="button_up" from="PauseLayer/Control/UnpauseButton" to="." method="_on_unpause_button_button_up"]
+[connection signal="button_up" from="PauseLayer/Control/ExitButton" to="." method="_on_exit_button_button_up"]
+[connection signal="finished" from="BackgroundMusic" to="." method="_on_background_music_finished"]
+[connection signal="timeout" from="MusicTimer" to="." method="_on_music_timer_timeout"]

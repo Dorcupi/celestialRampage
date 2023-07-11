@@ -41,6 +41,7 @@ scale = Vector2(1, 1.05)
 polygon = PackedVector2Array(-52, 9, -52, -29.5238, -6, -60, 37, -37, 41, 10, 21, 25.7143, -3, 12, -25, 27.6191)
 
 [node name="CursorLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="ControllerCursor" parent="CursorLayer" instance=ExtResource("7_sssrr")]
 position = Vector2(243, 4.76837e-07)

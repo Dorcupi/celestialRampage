@@ -4,6 +4,9 @@ var sceneChangePlace
 
 var forward = true
 
+var scenePath = "res://scenes/menu.tscn"
+
+
 func _ready():
 	pass # Replace with function body.
 
@@ -15,6 +18,7 @@ func _process(delta):
 
 func _on_settings_button_button_up():
 	sceneChangePlace = "res://scenes/settings.tscn"
+	GameData.lastScene = scenePath
 	forward = true
 	$AnimationPlayer.play("zoom_in")
 
@@ -28,5 +32,10 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_play_button_button_up():
 	sceneChangePlace = "res://scenes/game.tscn"
+	GameData.lastScene = scenePath
 	forward = true
 	$AnimationPlayer.play("zoom_in")
+
+
+func _on_exit_button_button_up():
+	get_tree().quit()

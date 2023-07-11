@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_j683g"]
 
 [node name="Bullet" type="CharacterBody2D"]
+process_mode = 1
 scale = Vector2(0.8, 0.8)
 motion_mode = 1
 script = ExtResource("1_j683g")
@@ -14,3 +15,10 @@ polygon = PackedVector2Array(30, 0, 0, 18, -30, 0, 0, -18)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
 polygon = PackedVector2Array(0, -18, 30, 0, 0, 18, -30, 0)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-2.5, -0.625)
+scale = Vector2(4, 2.6875)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

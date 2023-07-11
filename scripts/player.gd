@@ -41,10 +41,10 @@ func hit(damage):
 		$HurtSound.play()
 		$Polygon2D.get_material().set_shader_parameter('active',true)
 		$FlashTimer.start()
-		if $CursorLayer/ControllerCursor.mouse_used:
+		if $CursorLayer/ControllerCursor.mouse_used == false:
 			if GameData.controllerRumble:
 				for i in Input.get_connected_joypads():
-					Input.start_joy_vibration(i, 1, 0, 0.2)
+					Input.start_joy_vibration(i, 1, 1, 0.2)
 
 func get_input():
 	

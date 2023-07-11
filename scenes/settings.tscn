@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvnie330xjkv1"]
+[gd_scene load_steps=16 format=3 uid="uid://bvnie330xjkv1"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_yjr21"]
 [ext_resource type="Texture2D" uid="uid://vd2ofviu1q4i" path="res://assets/noisespace.tres" id="2_akbrc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="4_y36ig"]
 [ext_resource type="FontFile" uid="uid://cqfkdwa8sxqea" path="res://fonts/PixeloidSansBold-PKnYd.ttf" id="5_gtgcp"]
 [ext_resource type="FontFile" uid="uid://de3hgi1l25w0o" path="res://fonts/PixeloidMono-d94EV.ttf" id="6_ovbh3"]
+[ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="7_ci6jl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5din7"]
 shader = ExtResource("4_y36ig")
@@ -13,6 +14,50 @@ shader = ExtResource("4_y36ig")
 [sub_resource type="LabelSettings" id="LabelSettings_yth0v"]
 font = ExtResource("5_gtgcp")
 font_size = 70
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trrb1"]
+content_margin_top = 6.0
+content_margin_bottom = 8.0
+bg_color = Color(0.168627, 0.00784314, 0.258824, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_moki2"]
+content_margin_top = 6.0
+content_margin_bottom = 8.0
+bg_color = Color(0.356863, 0.0352941, 0.521569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhswl"]
+content_margin_top = 6.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0823529, 0.00392157, 0.141176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 10
+
+[sub_resource type="Animation" id="Animation_y7wr1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationLayer/Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_a0dyb"]
 resource_name = "fade_out"
@@ -28,21 +73,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_y7wr1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimationLayer/Fade:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2tb7b"]
@@ -71,6 +101,11 @@ texture = ExtResource("2_akbrc")
 [node name="CursorLayer" type="CanvasLayer" parent="."]
 
 [node name="ControllerCursor" parent="CursorLayer" instance=ExtResource("3_t0csp")]
+forward_keybind = "joypad_forward"
+backward_keybind = "joypad_backward"
+left_keybind = "joypad_left"
+right_keybind = "joypad_right"
+click_keybind = "joypad_click_event"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -136,6 +171,29 @@ theme_override_font_sizes/font_size = 30
 button_pressed = true
 text = "Controller Rumble"
 
+[node name="Control2" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1153.0
+offset_bottom = 648.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Exit" type="Button" parent="CanvasLayer/Control2"]
+layout_mode = 0
+offset_left = 929.0
+offset_top = 25.0
+offset_right = 1118.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("7_ci6jl")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_trrb1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_moki2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lhswl")
+text = "Back"
+
 [node name="AnimationLayer" type="CanvasLayer" parent="."]
 
 [node name="Fade" type="ColorRect" parent="AnimationLayer"]
@@ -162,3 +220,5 @@ libraries = {
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/CRTEffectButton" to="." method="_on_crt_effect_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/RumbleButton" to="." method="_on_rumble_button_toggled"]
+[connection signal="button_up" from="CanvasLayer/Control2/Exit" to="." method="_on_exit_button_up"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

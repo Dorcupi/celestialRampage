@@ -23,3 +23,10 @@ polygon = PackedVector2Array(-3.66667, -7.66667, 4.33333, -7.66667, 8.66667, -2.
 scale = Vector2(0.4, 0.4)
 color = Color(0.423529, 0.607843, 1, 1)
 polygon = PackedVector2Array(-3.66667, -7.66667, 4.33333, -7.66667, 8.66667, -2.33333, 8.66667, 4, 4, 8.33333, -3.33333, 8.33333, -8, 3.66667, -8, -2.66667)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0.3, 1.19209e-07)
+scale = Vector2(1.23, 1.1)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

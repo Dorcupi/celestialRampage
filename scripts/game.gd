@@ -10,6 +10,8 @@ extends Node2D
 
 @onready var powerupTimer
 
+@onready var controllerCursor = player.get_node("CursorLayer/ControllerCursor")
+
 var wave = 1
 
 var enemiesRequired = 5
@@ -23,6 +25,8 @@ var enemiesSpawned = 5
 var waveOn = true
 
 var powerupsAvaliable = 0
+
+var gamePaused = false
 
 func checkForPowerups():
 	powerupsAvaliable = 0
@@ -55,6 +59,7 @@ func summon_enemies(enemyAmount):
 		summon_enemy()
 
 func _ready():
+	$MusicTimer.start(2)
 	randomize()
 	summon_enemies(5)
 	waveOn = true
@@ -63,6 +68,7 @@ func _ready():
 	enemiesSpawned = 5
 	$CanvasLayer/Control/Wave.text = "WAVE " + str(wave)
 	$CanvasLayer/AnimationPlayer.play("wave_fade_in")
+	
 
 func _physics_process(delta):
 	
@@ -81,6 +87,30 @@ func _physics_process(delta):
 		enemiesRequired += randi_range(2, 5)
 		$SpawnTimer.stop()
 		$CooldownTimer.start(5)
+		
+	if Input.is_action_just_pressed("pause"):
+		gamePaused = not gamePaused
+		get_tree().paused = not get_tree().paused
+		
+	if get_tree().paused:
+		$PauseLayer.visible = true
+	else:
+		$PauseLayer.visible = false
+		
+	if gamePaused == true:
+		controllerCursor.forward_keybind = "joypad_forward"
+		controllerCursor.backward_keybind = "joypad_backward"
+		controllerCursor.left_keybind = "joypad_left"
+		controllerCursor.right_keybind = "joypad_right"
+		controllerCursor.click_keybind = "joypad_click_event"
+		print(controllerCursor.click_keybind)
+	else:
+		controllerCursor.forward_keybind = "joypad_rotate_forward"
+		controllerCursor.backward_keybind = "joypad_rotate_backward"
+		controllerCursor.left_keybind = "joypad_rotate_left"
+		controllerCursor.right_keybind = "joypad_rotate_right"
+		controllerCursor.click_keybind = ""
+		print(controllerCursor.click_keybind)
 
 
 func _on_cooldown_timer_timeout():
@@ -105,18 +135,48 @@ func _on_spawn_timer_timeout():
 func _on_powerup_timer_timeout():
 	checkForPowerups()
 	if powerupsAvaliable <= 2:
-		var powerupSelection = randi_range(1,2)
+		var powerupSelection = randi_range(1,3)
 		
-		if powerupSelection == 1:
-			var loadingPowerup = healthPowerPreload.instantiate()
-			loadingPowerup.position.x = randi_range(-1168, 1740)
-			loadingPowerup.position.y = randi_range(-519, 946)
-			loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
-			add_child(loadingPowerup)
-			
-		if powerupSelection == 2:
+		if powerupSelection >= 2:
 			var loadingPowerup = bulletPowerPreload.instantiate()
 			loadingPowerup.position.x = randi_range(-1168, 1740)
 			loadingPowerup.position.y = randi_range(-519, 946)
 			loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
 			add_child(loadingPowerup)
+		
+		if powerupSelection >= 1:
+			var loadingPowerup = healthPowerPreload.instantiate()
+			loadingPowerup.position.x = randi_range(-1168, 1740)
+			loadingPowerup.position.y = randi_range(-519, 946)
+			loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
+			add_child(loadingPowerup)
+
+
+func _on_unpause_button_button_up():
+	gamePaused = false
+	get_tree().paused = false
+		
+	if get_tree().paused:
+		$PauseLayer.visible = true
+	else:
+		$PauseLayer.visible = false
+
+
+func _on_exit_button_button_up():
+	gamePaused = false
+	get_tree().paused = false
+		
+	if get_tree().paused:
+		$PauseLayer.visible = true
+	else:
+		$PauseLayer.visible = false
+		
+	get_tree().change_scene_to_file(GameData.lastScene)
+
+
+func _on_background_music_finished():
+	$MusicTimer.start(2)
+
+
+func _on_music_timer_timeout():
+	$BackgroundMusic.play()

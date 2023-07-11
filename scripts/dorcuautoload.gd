@@ -10,7 +10,7 @@ var controllerRumble = true
 
 var lastMode
 
-var lastScene
+var lastScene = "res://scenes/menu.tscn"
 
 func _ready():
 	lastMode = DisplayServer.window_get_mode()
