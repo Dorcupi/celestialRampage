@@ -1,0 +1,164 @@
+[gd_scene load_steps=12 format=3 uid="uid://bvnie330xjkv1"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_yjr21"]
+[ext_resource type="Texture2D" uid="uid://vd2ofviu1q4i" path="res://assets/noisespace.tres" id="2_akbrc"]
+[ext_resource type="PackedScene" uid="uid://c3228gkmr5srp" path="res://characters/controller_cursor.tscn" id="3_t0csp"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="4_y36ig"]
+[ext_resource type="FontFile" uid="uid://cqfkdwa8sxqea" path="res://fonts/PixeloidSansBold-PKnYd.ttf" id="5_gtgcp"]
+[ext_resource type="FontFile" uid="uid://de3hgi1l25w0o" path="res://fonts/PixeloidMono-d94EV.ttf" id="6_ovbh3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5din7"]
+shader = ExtResource("4_y36ig")
+
+[sub_resource type="LabelSettings" id="LabelSettings_yth0v"]
+font = ExtResource("5_gtgcp")
+font_size = 70
+
+[sub_resource type="Animation" id="Animation_a0dyb"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationLayer/Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_y7wr1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationLayer/Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2tb7b"]
+_data = {
+"RESET": SubResource("Animation_y7wr1"),
+"fade_out": SubResource("Animation_a0dyb")
+}
+
+[node name="Settings" type="Node2D"]
+script = ExtResource("1_yjr21")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+texture_repeat = 2
+offset_left = -1642.0
+offset_top = -559.0
+offset_right = 2763.0
+offset_bottom = 1437.0
+color = Color(0.00784314, 0.121569, 0.247059, 1)
+
+[node name="Noise" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(634.5, 317)
+scale = Vector2(5.091, 2.532)
+texture = ExtResource("2_akbrc")
+
+[node name="CursorLayer" type="CanvasLayer" parent="."]
+
+[node name="ControllerCursor" parent="CursorLayer" instance=ExtResource("3_t0csp")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CRTEffect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_5din7")
+offset_left = -1386.0
+offset_top = -406.0
+offset_right = 2315.0
+offset_bottom = 1326.0
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1150.0
+offset_bottom = 646.0
+
+[node name="BigText" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 23.0
+offset_right = 396.0
+offset_bottom = 112.0
+text = "Settings"
+label_settings = SubResource("LabelSettings_yth0v")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 125.0
+offset_right = 464.0
+offset_bottom = 610.0
+theme_override_constants/separation = 15
+
+[node name="SpaceBackgroundButton" type="CheckButton" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Makes the background more or less detailed."
+theme_override_fonts/font = ExtResource("6_ovbh3")
+theme_override_font_sizes/font_size = 30
+button_pressed = true
+text = "Space Background"
+
+[node name="CRTEffectButton" type="CheckButton" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Make the game look more or less old."
+theme_override_fonts/font = ExtResource("6_ovbh3")
+theme_override_font_sizes/font_size = 30
+button_pressed = true
+text = "CRT Effect"
+
+[node name="FullscreenButton" type="CheckButton" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Makes the game windowed or fullscreen."
+theme_override_fonts/font = ExtResource("6_ovbh3")
+theme_override_font_sizes/font_size = 30
+text = "Fullscreen"
+
+[node name="RumbleButton" type="CheckButton" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Makes the game windowed or fullscreen."
+theme_override_fonts/font = ExtResource("6_ovbh3")
+theme_override_font_sizes/font_size = 30
+button_pressed = true
+text = "Controller Rumble"
+
+[node name="AnimationLayer" type="CanvasLayer" parent="."]
+
+[node name="Fade" type="ColorRect" parent="AnimationLayer"]
+visible = false
+anchors_preset = -1
+anchor_left = -1.39583
+anchor_top = -0.685185
+anchor_right = 1.27344
+anchor_bottom = 0.665123
+offset_left = -631.0
+offset_top = -740.0
+offset_right = 2617.0
+offset_bottom = 1334.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2tb7b")
+}
+
+[connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/SpaceBackgroundButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/CRTEffectButton" to="." method="_on_crt_effect_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/RumbleButton" to="." method="_on_rumble_button_toggled"]

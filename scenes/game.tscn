@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://0mgtt1wpiua0"]
+[gd_scene load_steps=13 format=3 uid="uid://0mgtt1wpiua0"]
 
 [ext_resource type="PackedScene" uid="uid://c6utkoh2wobe0" path="res://characters/player.tscn" id="1_3ds0p"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_q0xx5"]
-[ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="3_gghcc"]
 [ext_resource type="FontFile" uid="uid://cqfkdwa8sxqea" path="res://fonts/PixeloidSansBold-PKnYd.ttf" id="4_02fjl"]
+[ext_resource type="Texture2D" uid="uid://vd2ofviu1q4i" path="res://assets/noisespace.tres" id="4_r14gi"]
 [ext_resource type="AudioStream" uid="uid://cq3wyvom31kbl" path="res://sounds/death.sfxr" id="5_45x44"]
+[ext_resource type="AudioStream" uid="uid://dgwrb3nlof23v" path="res://sounds/powerup1.sfxr" id="6_q88lu"]
 
 [sub_resource type="Animation" id="Animation_v72ci"]
 length = 0.001
@@ -100,16 +101,31 @@ shadow_size = 22
 shadow_color = Color(0, 0, 0, 0.215686)
 shadow_offset = Vector2(3, 2)
 
-[sub_resource type="LabelSettings" id="LabelSettings_aotsu"]
-font = ExtResource("3_gghcc")
-font_size = 25
-font_color = Color(0, 0, 0, 1)
-outline_color = Color(0.0313726, 0.439216, 0.686275, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2k074"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.372549)
+shadow_size = 9
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhmnl"]
+bg_color = Color(0.741176, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 9
+shadow_offset = Vector2(5, 0)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_q0xx5")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+texture_repeat = 2
 offset_left = -2730.0
 offset_top = -1981.0
 offset_right = 3227.0
@@ -161,37 +177,40 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -433.0
+offset_left = -439.5
 offset_top = -229.0
-offset_right = 446.0
+offset_right = 439.5
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="HealthBarA" type="ColorRect" parent="CanvasLayer/Control2"]
-layout_mode = 0
-offset_left = 273.0
-offset_top = 131.0
-offset_right = 602.0
-offset_bottom = 198.0
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -163.0
+offset_top = 15.5
+offset_right = 163.0
+offset_bottom = 69.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_02fjl")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/background = SubResource("StyleBoxFlat_2k074")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dhmnl")
+value = 37.0
 
-[node name="HealthBarB" type="ColorRect" parent="CanvasLayer/Control2"]
-layout_mode = 0
-offset_left = 288.0
-offset_top = 145.0
-offset_right = 588.0
-offset_bottom = 184.0
-color = Color(0.741176, 0, 0, 1)
-
-[node name="Health" type="Label" parent="CanvasLayer/Control2"]
-layout_mode = 0
-offset_left = 379.0
-offset_top = 150.0
-offset_right = 498.0
-offset_bottom = 184.0
-text = "100/100"
-label_settings = SubResource("LabelSettings_aotsu")
+[node name="Noise" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(360, 161)
+scale = Vector2(6, 6)
+texture = ExtResource("4_r14gi")
 
 [node name="Border" type="Polygon2D" parent="."]
+texture_repeat = 3
 color = Color(0.196078, 0.870588, 0.541176, 1)
 invert_enabled = true
 invert_border = 5026.9
@@ -200,6 +219,7 @@ polygon = PackedVector2Array(-2364, -274, -2383, 868, -1403, 2019, 1889, 2010, 2
 [node name="StaticBody2D" type="StaticBody2D" parent="Border"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border/StaticBody2D"]
+visible = false
 polygon = PackedVector2Array(-3109, -2313, -3071, 2754, 3710, 2754, 3748, -2288, 1755, -1551, 2986, -370, 2961, 1039, 1958, 1992, -1446, 1979, -2423, 938, -2436, -218, -1128, -1564, 1742, -1538, 3761, -2275)
 
 [node name="Marker2D" type="Marker2D" parent="."]
@@ -218,6 +238,9 @@ autostart = true
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_45x44")
+
+[node name="PowerupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_q88lu")
 
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

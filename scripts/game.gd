@@ -6,6 +6,8 @@ extends Node2D
 
 @onready var healthPowerPreload = preload("res://assets/powerups/health_powerup.tscn")
 
+@onready var bulletPowerPreload = preload("res://assets/powerups/health_powerup.tscn")
+
 @onready var powerupTimer
 
 var wave = 1
@@ -13,6 +15,8 @@ var wave = 1
 var enemiesRequired = 5
 
 var enemiesKilled = 0
+
+var totalEnKilled = 0
 
 var enemiesSpawned = 5
 
@@ -39,6 +43,7 @@ func summon_enemy():
 	e.position.y = y
 	
 	var clonedMa = e.get_node("Polygon2D").get_material().duplicate()
+	
 	e.get_node("Polygon2D").set_material(clonedMa)
 	
 	add_child(e)
@@ -60,16 +65,20 @@ func _ready():
 	$CanvasLayer/AnimationPlayer.play("wave_fade_in")
 
 func _physics_process(delta):
-	$CanvasLayer/Control2/HealthBarB.size.x = (300 / $Player.maxHealth) * ($Player.health)
-	$CanvasLayer/Control2/Health.text = str($Player.health) + "/" + str($Player.maxHealth)
+	
+	$Noise.visible = GameData.spaceBackground
+	
+	$Player/Camera2D/CanvasLayer/CRTEffect.visible = GameData.crtShader
+	
+	$CanvasLayer/Control2/ProgressBar.max_value = player.maxHealth
+	
+	$CanvasLayer/Control2/ProgressBar.value = player.health
 	
 	if enemiesKilled == enemiesRequired and waveOn:
 		waveOn = false
 		enemiesKilled = 0
 		enemiesSpawned = 0
 		enemiesRequired += randi_range(2, 5)
-		player.maxHealth += randi_range(20, 50)
-		player.health += randi_range(5, 15)
 		$SpawnTimer.stop()
 		$CooldownTimer.start(5)
 
@@ -79,6 +88,8 @@ func _on_cooldown_timer_timeout():
 	$CanvasLayer/Control/Wave.text = "WAVE " + str(wave)
 	$CanvasLayer/AnimationPlayer.play("wave_fade_in")
 	waveOn = true
+	player.maxHealth += randi_range(20, 50)
+	player.health += randi_range(5, 15)
 	summon_enemies(1)
 	$SpawnTimer.start()
 	enemiesSpawned += 1
@@ -94,10 +105,18 @@ func _on_spawn_timer_timeout():
 func _on_powerup_timer_timeout():
 	checkForPowerups()
 	if powerupsAvaliable <= 2:
-		var powerupSelection = randi_range(1,1)
+		var powerupSelection = randi_range(1,2)
+		
 		if powerupSelection == 1:
 			var loadingPowerup = healthPowerPreload.instantiate()
 			loadingPowerup.position.x = randi_range(-1168, 1740)
 			loadingPowerup.position.y = randi_range(-519, 946)
 			loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
+			add_child(loadingPowerup)
+			
+		if powerupSelection == 2:
+			var loadingPowerup = bulletPowerPreload.instantiate()
+			loadingPowerup.position.x = randi_range(-1168, 1740)
+			loadingPowerup.position.y = randi_range(-519, 946)
+			loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
 			add_child(loadingPowerup)

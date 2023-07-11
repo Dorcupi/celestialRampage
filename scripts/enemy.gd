@@ -73,6 +73,7 @@ func hit(damage):
 	health = health - damage
 	if health <= 0:
 		get_parent().enemiesKilled += 1
+		get_parent().totalEnKilled += 1
 		get_parent().get_node("DeathSound").play()
 		queue_free()
 	else:

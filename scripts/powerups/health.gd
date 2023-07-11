@@ -1,4 +1,4 @@
-class_name Powerup
+class_name Effect
 extends CharacterBody2D
 
 var uses = 4
@@ -11,8 +11,10 @@ func _physics_process(delta):
 		queue_free()
 	
 func powerup(affecting):
-	affecting.health += randi_range(25, 50)
-	if affecting.health >= affecting.maxHealth:
+	
+	affecting.health += randi_range(30, 80)
+	
+	if affecting.health > affecting.maxHealth:
 		affecting.health = affecting.maxHealth
 		
 	var x = randi_range(-1168, 1740)
@@ -22,5 +24,7 @@ func powerup(affecting):
 	self.position.x = x
 	
 	self.position.y = y
+	
+	get_parent().get_node("PowerupSound").play()
 	
 	uses -= 1

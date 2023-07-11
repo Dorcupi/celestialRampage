@@ -1,15 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6utkoh2wobe0"]
+[gd_scene load_steps=12 format=3 uid="uid://c6utkoh2wobe0"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_526ke"]
 [ext_resource type="Script" path="res://addons/shaker/shaker.gd" id="2_dwqnm"]
 [ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="2_msotu"]
 [ext_resource type="AudioStream" uid="uid://dgq0ngtfqm0pj" path="res://sounds/hurt.sfxr" id="3_ps1n1"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="3_tcru5"]
 [ext_resource type="AudioStream" uid="uid://djyq2ki2ttljw" path="res://sounds/shoot.sfxr" id="4_v7xob"]
+[ext_resource type="PackedScene" uid="uid://c3228gkmr5srp" path="res://characters/controller_cursor.tscn" id="7_sssrr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q7cw1"]
 shader = ExtResource("2_msotu")
 shader_parameter/active = false
 shader_parameter/tint = Color(1, 1, 0.447059, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_63jxn"]
+shader = ExtResource("3_tcru5")
 
 [sub_resource type="Gradient" id="Gradient_gu1x6"]
 offsets = PackedFloat32Array(0, 0.509934)
@@ -35,13 +40,39 @@ rotation = 1.5708
 scale = Vector2(1, 1.05)
 polygon = PackedVector2Array(-52, 9, -52, -29.5238, -6, -60, 37, -37, 41, 10, 21, 25.7143, -3, 12, -25, 27.6191)
 
+[node name="CursorLayer" type="CanvasLayer" parent="."]
+
+[node name="ControllerCursor" parent="CursorLayer" instance=ExtResource("7_sssrr")]
+position = Vector2(243, 4.76837e-07)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.7, 0.7)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="CRTEffect" type="ColorRect" parent="Camera2D/CanvasLayer"]
+material = SubResource("ShaderMaterial_63jxn")
+offset_left = -1628.0
+offset_top = -1049.0
+offset_right = 2198.0
+offset_bottom = 1414.0
+
 [node name="ShootPos" type="Marker2D" parent="."]
 position = Vector2(143, -2)
+
+[node name="ShootPos2" type="Marker2D" parent="."]
+position = Vector2(139, -57)
+
+[node name="ShootPos3" type="Marker2D" parent="."]
+position = Vector2(145, 41)
+
+[node name="ShootPos4" type="Marker2D" parent="."]
+position = Vector2(147, 93)
+
+[node name="ShootPos5" type="Marker2D" parent="."]
+position = Vector2(133, -119)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(-46, -1)
@@ -79,4 +110,9 @@ volume_db = -5.0
 wait_time = 0.1
 one_shot = true
 
+[node name="ShootPowerTimer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="ShootPowerTimer" to="." method="_on_shoot_power_timer_timeout"]

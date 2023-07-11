@@ -1,0 +1,13 @@
+[gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://vd2ofviu1q4i"]
+
+[sub_resource type="Gradient" id="Gradient_jnsco"]
+colors = PackedColorArray(0, 0, 0, 0.552941, 0, 0, 0, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4wjpt"]
+
+[resource]
+width = 1000
+height = 1000
+generate_mipmaps = false
+color_ramp = SubResource("Gradient_jnsco")
+noise = SubResource("FastNoiseLite_4wjpt")
