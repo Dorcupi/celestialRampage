@@ -12,6 +12,16 @@ extends Node2D
 
 @onready var controllerCursor = player.get_node("CursorLayer/ControllerCursor")
 
+# Music
+
+@onready var song1 = preload("res://music/CSRampage_Loop_Song_A.mp3")
+
+@onready var song2 = preload("res://music/CSRampage_Loop_Song_2.mp3")
+
+var songPlaying = 1
+
+var songAmount = 2
+
 var wave = 1
 
 var enemiesRequired = 5
@@ -27,6 +37,23 @@ var waveOn = true
 var powerupsAvaliable = 0
 
 var gamePaused = false
+
+func reroll_song():
+	var newSong = randi_range(1, songAmount)
+	if newSong == songPlaying:
+		return(reroll_song())
+	else:
+		return(newSong)
+
+func play_song():
+	var songChoice = reroll_song()
+	if songChoice == 1:
+		$BackgroundMusic.stream = song1
+	elif songChoice == 2:
+		$BackgroundMusic.stream = song2
+	else:
+		$BackgroundMusic.stream = song2
+	$BackgroundMusic.play()
 
 func checkForPowerups():
 	powerupsAvaliable = 0
@@ -179,4 +206,4 @@ func _on_background_music_finished():
 
 
 func _on_music_timer_timeout():
-	$BackgroundMusic.play()
+	play_song()
