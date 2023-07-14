@@ -24,6 +24,8 @@ func _physics_process(delta):
 	$CanvasLayer/CRTEffect.visible = GameData.crtShader
 	$CanvasLayer/Control/VBoxContainer/FullscreenButton.button_pressed = GameData.fullscreen
 	$CanvasLayer/Control/VBoxContainer/RumbleButton.button_pressed = GameData.controllerRumble
+	$CanvasLayer/Control/VBoxContainer/MusicSlider/MusicSlider.value = GameData.musicVolume
+	$CanvasLayer/Control/VBoxContainer/SFXSlider/SFXSlider.value = GameData.sfxVolume
 
 func _on_check_button_toggled(button_pressed):
 	
@@ -58,3 +60,13 @@ func _on_exit_button_up():
 func _on_animation_player_animation_finished(anim_name):
 	if fadeForwards == false:
 		get_tree().change_scene_to_file(GameData.lastScene)
+
+
+func _on_music_slider_drag_ended(value_changed):
+	if value_changed:
+		GameData.musicVolume = $CanvasLayer/Control/VBoxContainer/MusicSlider/MusicSlider.value
+
+
+func _on_sfx_slider_drag_ended(value_changed):
+	if value_changed:
+		GameData.sfxVolume = $CanvasLayer/Control/VBoxContainer/SFXSlider/SFXSlider.value

@@ -18,9 +18,13 @@ extends Node2D
 
 @onready var song2 = preload("res://music/CSRampage_Loop_Song_2.mp3")
 
+@onready var song3 = preload("res://music/CSRampage_Loop_Song_3.mp3")
+
+@onready var song4 = preload("res://music/CSRampage_Loop_Mix_1_2.mp3")
+
 var songPlaying = 1
 
-var songAmount = 2
+var songAmount = 4
 
 var wave = 1
 
@@ -39,6 +43,7 @@ var powerupsAvaliable = 0
 var gamePaused = false
 
 func reroll_song():
+	randomize()
 	var newSong = randi_range(1, songAmount)
 	if newSong == songPlaying:
 		return(reroll_song())
@@ -46,13 +51,18 @@ func reroll_song():
 		return(newSong)
 
 func play_song():
+	randomize()
 	var songChoice = reroll_song()
 	if songChoice == 1:
 		$BackgroundMusic.stream = song1
 	elif songChoice == 2:
 		$BackgroundMusic.stream = song2
+	elif songChoice == 3:
+		$BackgroundMusic.stream = song3
+	elif songChoice == 4:
+		$BackgroundMusic.stream = song4
 	else:
-		$BackgroundMusic.stream = song2
+		$BackgroundMusic.stream = song4
 	$BackgroundMusic.play()
 
 func checkForPowerups():
@@ -162,6 +172,7 @@ func _on_spawn_timer_timeout():
 func _on_powerup_timer_timeout():
 	checkForPowerups()
 	if powerupsAvaliable <= 2:
+		randomize()
 		var powerupSelection = randi_range(1,3)
 		
 		if powerupSelection >= 2:

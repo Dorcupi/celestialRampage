@@ -280,10 +280,12 @@ autostart = true
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 process_mode = 1
 stream = ExtResource("5_45x44")
+bus = &"SFX"
 
 [node name="PowerupSound" type="AudioStreamPlayer2D" parent="."]
 process_mode = 1
 stream = ExtResource("6_q88lu")
+bus = &"SFX"
 
 [node name="PauseLayer" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -353,6 +355,7 @@ uppercase = true
 process_mode = 1
 stream = ExtResource("8_qv00o")
 volume_db = 1.0
+bus = &"Music"
 
 [node name="MusicTimer" type="Timer" parent="."]
 process_mode = 1

@@ -20,6 +20,7 @@ func _on_settings_button_button_up():
 	sceneChangePlace = "res://scenes/settings.tscn"
 	GameData.lastScene = scenePath
 	forward = true
+	$PortalSound.play()
 	$AnimationPlayer.play("zoom_in")
 
 
@@ -34,6 +35,7 @@ func _on_play_button_button_up():
 	sceneChangePlace = "res://scenes/game.tscn"
 	GameData.lastScene = scenePath
 	forward = true
+	$PortalSound.play()
 	$AnimationPlayer.play("zoom_in")
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cqd2paew7drrx"]
+[gd_scene load_steps=19 format=3 uid="uid://cqd2paew7drrx"]
 
 [ext_resource type="Texture2D" uid="uid://c7jqhj40ap7y1" path="res://assets/wood.jpg" id="1_dcavm"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_hevjt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="3_pft80"]
 [ext_resource type="Texture2D" uid="uid://kxd02elbnqx8" path="res://assets/tv.png" id="4_osbk5"]
 [ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="5_8yfr2"]
+[ext_resource type="AudioStream" uid="uid://buwgaldw51kb0" path="res://sounds/portal.wav" id="8_7xgcl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h8587"]
 shader = ExtResource("3_pft80")
@@ -261,6 +262,11 @@ metadata/_edit_use_anchors_ = true
 libraries = {
 "": SubResource("AnimationLibrary_5ykvs")
 }
+
+[node name="PortalSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_7xgcl")
+volume_db = 1.0
+bus = &"SFX"
 
 [connection signal="button_up" from="Control/ScrollContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_button_up"]
 [connection signal="button_up" from="Control/ScrollContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_button_up"]

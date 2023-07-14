@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bvnie330xjkv1"]
+[gd_scene load_steps=17 format=3 uid="uid://bvnie330xjkv1"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_yjr21"]
 [ext_resource type="Texture2D" uid="uid://vd2ofviu1q4i" path="res://assets/noisespace.tres" id="2_akbrc"]
@@ -14,6 +14,10 @@ shader = ExtResource("4_y36ig")
 [sub_resource type="LabelSettings" id="LabelSettings_yth0v"]
 font = ExtResource("5_gtgcp")
 font_size = 70
+
+[sub_resource type="LabelSettings" id="LabelSettings_lecve"]
+font = ExtResource("7_ci6jl")
+font_size = 30
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trrb1"]
 content_margin_top = 6.0
@@ -171,6 +175,37 @@ theme_override_font_sizes/font_size = 30
 button_pressed = true
 text = "Controller Rumble"
 
+[node name="MusicSlider" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Music"
+label_settings = SubResource("LabelSettings_lecve")
+
+[node name="MusicSlider" type="HSlider" parent="CanvasLayer/Control/VBoxContainer/MusicSlider"]
+layout_mode = 2
+offset_left = 124.0
+offset_top = 14.0
+offset_right = 419.0
+offset_bottom = 30.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SFXSlider" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "SFX"
+label_settings = SubResource("LabelSettings_lecve")
+
+[node name="SFXSlider" type="HSlider" parent="CanvasLayer/Control/VBoxContainer/SFXSlider"]
+layout_mode = 2
+offset_left = 124.0
+offset_top = 14.0
+offset_right = 419.0
+offset_bottom = 30.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+ticks_on_borders = true
+
 [node name="Control2" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 1
@@ -220,5 +255,7 @@ libraries = {
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/CRTEffectButton" to="." method="_on_crt_effect_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/RumbleButton" to="." method="_on_rumble_button_toggled"]
+[connection signal="drag_ended" from="CanvasLayer/Control/VBoxContainer/MusicSlider/MusicSlider" to="." method="_on_music_slider_drag_ended"]
+[connection signal="drag_ended" from="CanvasLayer/Control/VBoxContainer/SFXSlider/SFXSlider" to="." method="_on_sfx_slider_drag_ended"]
 [connection signal="button_up" from="CanvasLayer/Control2/Exit" to="." method="_on_exit_button_up"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
