@@ -1,7 +1,7 @@
 
 extends CharacterBody2D
 
-var uses = 4
+var uses = 2
 
 func _ready():
 	randomize()
@@ -12,10 +12,11 @@ func _physics_process(delta):
 	
 func powerup(affecting):
 	
-	affecting.health += randi_range(30, 80)
+	if "mana" in affecting:
+		affecting.mana += 50
 	
-	if affecting.health > affecting.maxHealth:
-		affecting.health = affecting.maxHealth
+		if affecting.mana > affecting.maxMana:
+			affecting.mana = affecting.maxMana
 		
 	var x = randi_range(-1168, 1740)
 	

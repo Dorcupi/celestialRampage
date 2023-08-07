@@ -11,13 +11,21 @@ extends CharacterBody2D
 
 @export var shoot_keybind = "shoot"
 
+@export var dash_keybind = "dash"
+
 @export var speed = 300
 
 @export var maxHealth = 100
 
+@export var maxMana = 100
+
+var input_dir
+
 var shootLevel = 1
 
 var health
+
+var mana
 
 var mouse_position
 
@@ -28,9 +36,16 @@ var attackDamage = 5
 func _ready():
 	health = maxHealth
 	
+	mana = maxMana
+	
 	var clonedMa =$Polygon2D.get_material().duplicate()
 	
 	$Polygon2D.set_material(clonedMa)
+
+func dash():
+	speed = speed * 3
+	$DashTimer.start()
+	$Camera2D/CanvasLayer/DashEffect.visible = true
 
 func hit(damage):
 	health = health - damage
@@ -48,7 +63,7 @@ func hit(damage):
 
 func get_input():
 	
-	var input_dir = Input.get_vector(left_keybind, right_keybind, forward_keybind, backward_keybind)
+	input_dir = Input.get_vector(left_keybind, right_keybind, forward_keybind, backward_keybind)
 	velocity = input_dir * speed
 		
 
@@ -116,6 +131,11 @@ func _physics_process(delta):
 			var f = bullet.instantiate()
 			f.start($ShootPos5.global_position, rotation, attackDamage, self)
 			get_tree().root.add_child(f)
+			
+	if Input.is_action_just_pressed(dash_keybind):
+		if mana >= 40:
+			mana -= 40
+			dash()
 	
 	move_and_slide()
 
@@ -126,3 +146,7 @@ func _on_flash_timer_timeout():
 
 func _on_shoot_power_timer_timeout():
 	shootLevel = 1
+
+func _on_dash_timer_timeout():
+	speed = 300
+	$Camera2D/CanvasLayer/DashEffect.visible = false

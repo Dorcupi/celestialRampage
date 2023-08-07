@@ -55,10 +55,25 @@ rotation_smoothing_enabled = true
 
 [node name="CRTEffect" type="ColorRect" parent="Camera2D/CanvasLayer"]
 material = SubResource("ShaderMaterial_63jxn")
-offset_left = -1628.0
-offset_top = -1049.0
-offset_right = 2198.0
-offset_bottom = 1414.0
+offset_left = -20351.0
+offset_top = -13683.0
+offset_right = 21986.0
+offset_bottom = 14010.0
+
+[node name="DashEffect" type="ColorRect" parent="Camera2D/CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24707.0
+offset_top = -17579.0
+offset_right = 24834.0
+offset_bottom = 15735.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+color = Color(0, 1, 1, 0.121569)
 
 [node name="ShootPos" type="Marker2D" parent="."]
 position = Vector2(143, -2)
@@ -117,5 +132,9 @@ one_shot = true
 wait_time = 60.0
 one_shot = true
 
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
 [connection signal="timeout" from="ShootPowerTimer" to="." method="_on_shoot_power_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/powerups/bullet.gd" id="1_6me6g"]
 
-[node name="BulletPowerup" type="CharacterBody2D"]
+[node name="BulletPowerup" type="CharacterBody2D" groups=["powerup"]]
 scale = Vector2(5, 5)
 motion_mode = 1
 script = ExtResource("1_6me6g")

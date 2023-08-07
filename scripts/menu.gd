@@ -40,4 +40,4 @@ func _on_play_button_button_up():
 
 
 func _on_exit_button_button_up():
-	get_tree().quit()
+	GameData.exit()

@@ -37,14 +37,7 @@ func _on_crt_effect_button_toggled(button_pressed):
 
 func _on_fullscreen_button_toggled(button_pressed):
 	
-	GameData.fullscreen = button_pressed
-	
-	if button_pressed == false:
-		DisplayServer.window_set_mode(GameData.lastMode)
-	else:
-		GameData.lastMode = DisplayServer.window_get_mode()
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	
+	await GameData.fullscreen_toggle(button_pressed)
 	
 
 
@@ -70,3 +63,7 @@ func _on_music_slider_drag_ended(value_changed):
 func _on_sfx_slider_drag_ended(value_changed):
 	if value_changed:
 		GameData.sfxVolume = $CanvasLayer/Control/VBoxContainer/SFXSlider/SFXSlider.value
+
+
+func _on_music_slider_value_changed(value):
+	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://0mgtt1wpiua0"]
+[gd_scene load_steps=22 format=3 uid="uid://0mgtt1wpiua0"]
 
 [ext_resource type="PackedScene" uid="uid://c6utkoh2wobe0" path="res://characters/player.tscn" id="1_3ds0p"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_q0xx5"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dgwrb3nlof23v" path="res://sounds/powerup1.sfxr" id="6_q88lu"]
 [ext_resource type="FontFile" uid="uid://dfw06fmaj8nym" path="res://fonts/PixeloidSans-mLxMm.ttf" id="7_8ifsp"]
 [ext_resource type="AudioStream" uid="uid://bqfikjlgkcrf5" path="res://music/CSRampage_Loop_Song_A.mp3" id="8_qv00o"]
+[ext_resource type="FontFile" uid="uid://de3hgi1l25w0o" path="res://fonts/PixeloidMono-d94EV.ttf" id="9_83g1e"]
 
 [sub_resource type="Animation" id="Animation_v72ci"]
 length = 0.001
@@ -123,6 +124,26 @@ shadow_color = Color(0, 0, 0, 0.152941)
 shadow_size = 9
 shadow_offset = Vector2(5, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwgnt"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.372549)
+shadow_size = 9
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nm2m1"]
+bg_color = Color(0, 0.909804, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 9
+shadow_offset = Vector2(5, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uedl1"]
 content_margin_top = 6.0
 content_margin_bottom = 8.0
@@ -151,6 +172,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_vmbso"]
+font = ExtResource("9_83g1e")
+font_size = 40
 
 [node name="Node2D" type="Node2D"]
 process_mode = 3
@@ -238,6 +263,26 @@ theme_override_styles/background = SubResource("StyleBoxFlat_2k074")
 theme_override_styles/fill = SubResource("StyleBoxFlat_dhmnl")
 value = 37.0
 
+[node name="ManaBar" type="ProgressBar" parent="CanvasLayer/Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -163.0
+offset_top = -54.5
+offset_right = 163.0
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_02fjl")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/background = SubResource("StyleBoxFlat_xwgnt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nm2m1")
+value = 37.0
+
 [node name="Noise" type="Sprite2D" parent="."]
 process_mode = 1
 texture_repeat = 2
@@ -250,7 +295,7 @@ process_mode = 1
 texture_repeat = 3
 color = Color(0.196078, 0.870588, 0.541176, 1)
 invert_enabled = true
-invert_border = 5026.9
+invert_border = 16384.0
 polygon = PackedVector2Array(-2364, -274, -2383, 868, -1403, 2019, 1889, 2010, 2945, 1011, 3002, -331, 1755, -1549, -1118, -1596)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Border"]
@@ -292,10 +337,10 @@ process_mode = 3
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="PauseLayer"]
-offset_left = -2008.0
-offset_top = -1261.0
-offset_right = 2461.0
-offset_bottom = 1607.0
+offset_left = -26390.0
+offset_top = -15687.0
+offset_right = 29496.0
+offset_bottom = 20402.0
 color = Color(0, 0, 0, 0.858824)
 
 [node name="Control" type="Control" parent="PauseLayer"]
@@ -361,6 +406,22 @@ bus = &"Music"
 process_mode = 1
 wait_time = 2.0
 one_shot = true
+
+[node name="DebugScreen" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="DebugScreen"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1153.0
+offset_bottom = 648.0
+
+[node name="FPS" type="Label" parent="DebugScreen/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "FPS: 60"
+label_settings = SubResource("LabelSettings_vmbso")
 
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

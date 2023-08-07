@@ -1,22 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://j7wsvui2uere"]
+[gd_scene load_steps=2 format=3 uid="uid://bybxs8w0j03u7"]
 
-[ext_resource type="Script" path="res://scripts/powerups/health.gd" id="1_hmnmm"]
+[ext_resource type="Script" path="res://scripts/powerups/mana.gd" id="1_3rmfa"]
 
-[node name="HealthPowerup" type="CharacterBody2D" groups=["powerup"]]
+[node name="ManaPowerup" type="CharacterBody2D" groups=["powerup"]]
 scale = Vector2(5, 5)
 motion_mode = 1
-script = ExtResource("1_hmnmm")
+script = ExtResource("1_3rmfa")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-3.66667, -7.66667, 4.33333, -7.66667, 8.66667, -2.33333, 8.66667, 4, 4, 8.33333, -3.33333, 8.33333, -8, 3.66667, -8, -2.66667)
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(1, 0.423529, 0.443137, 1)
+color = Color(0, 1, 1, 1)
 polygon = PackedVector2Array(-3.66667, -7.66667, 4.33333, -7.66667, 8.66667, -2.33333, 8.66667, 4, 4, 8.33333, -3.33333, 8.33333, -8, 3.66667, -8, -2.66667)
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
 scale = Vector2(0.7, 0.7)
-color = Color(0.996078, 0.309804, 0.305882, 1)
+color = Color(0, 0.0588235, 1, 1)
 polygon = PackedVector2Array(-3.66667, -7.66667, 4.33333, -7.66667, 8.66667, -2.33333, 8.66667, 4, 4, 8.33333, -3.33333, 8.33333, -8, 3.66667, -8, -2.66667)
 
 [node name="Polygon2D3" type="Polygon2D" parent="."]

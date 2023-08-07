@@ -169,7 +169,7 @@ text = "Fullscreen"
 
 [node name="RumbleButton" type="CheckButton" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-tooltip_text = "Makes the game windowed or fullscreen."
+tooltip_text = "Turns on or off controller rumble when you take damage."
 theme_override_fonts/font = ExtResource("6_ovbh3")
 theme_override_font_sizes/font_size = 30
 button_pressed = true
@@ -186,6 +186,7 @@ offset_left = 124.0
 offset_top = 14.0
 offset_right = 419.0
 offset_bottom = 30.0
+tooltip_text = "Control background music volume."
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -201,6 +202,7 @@ offset_left = 124.0
 offset_top = 14.0
 offset_right = 419.0
 offset_bottom = 30.0
+tooltip_text = "Control sound effect volume."
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -256,6 +258,7 @@ libraries = {
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Control/VBoxContainer/RumbleButton" to="." method="_on_rumble_button_toggled"]
 [connection signal="drag_ended" from="CanvasLayer/Control/VBoxContainer/MusicSlider/MusicSlider" to="." method="_on_music_slider_drag_ended"]
+[connection signal="value_changed" from="CanvasLayer/Control/VBoxContainer/MusicSlider/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="drag_ended" from="CanvasLayer/Control/VBoxContainer/SFXSlider/SFXSlider" to="." method="_on_sfx_slider_drag_ended"]
 [connection signal="button_up" from="CanvasLayer/Control2/Exit" to="." method="_on_exit_button_up"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

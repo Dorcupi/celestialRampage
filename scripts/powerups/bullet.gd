@@ -1,4 +1,4 @@
-class_name Powerup
+
 extends CharacterBody2D
 
 var uses = 2

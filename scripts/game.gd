@@ -8,6 +8,8 @@ extends Node2D
 
 @onready var bulletPowerPreload = preload("res://assets/powerups/health_powerup.tscn")
 
+@onready var manaPowerPreload = preload("res://assets/powerups/mana_powerup.tscn")
+
 @onready var powerupTimer
 
 @onready var controllerCursor = player.get_node("CursorLayer/ControllerCursor")
@@ -42,6 +44,68 @@ var powerupsAvaliable = 0
 
 var gamePaused = false
 
+func _input(event):
+	if event.is_action_pressed("debug_key"):
+		$DebugScreen.visible = not $DebugScreen.visible
+
+func spawnPowerup():
+	randomize()
+	var powerupSelection = randi_range(0,7)
+	
+	if powerupSelection <= 5:
+		var loadingPowerup = manaPowerPreload.instantiate()
+		loadingPowerup.position.x = randi_range(-1168, 1740)
+		loadingPowerup.position.y = randi_range(-519, 946)
+		loadingPowerup.name = "PowerupM" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+	elif powerupSelection <= 3:
+		var loadingPowerup = bulletPowerPreload.instantiate()
+		loadingPowerup.position.x = randi_range(-1168, 1740)
+		loadingPowerup.position.y = randi_range(-519, 946)
+		loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+	elif powerupSelection <= 1:
+		var loadingPowerup = healthPowerPreload.instantiate()
+		loadingPowerup.position.x = randi_range(-1168, 1740)
+		loadingPowerup.position.y = randi_range(-519, 946)
+		loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+	else:
+		var loadingPowerup = manaPowerPreload.instantiate()
+		loadingPowerup.position.x = randi_range(-1168, 1740)
+		loadingPowerup.position.y = randi_range(-519, 946)
+		loadingPowerup.name = "PowerupR" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+
+func debugPowerup(posX: int, posY: int):
+	randomize()
+	var powerupSelection = randi_range(1,6)
+	
+	if powerupSelection <= 5:
+		var loadingPowerup = manaPowerPreload.instantiate()
+		loadingPowerup.position.x = posX
+		loadingPowerup.position.y = posY
+		loadingPowerup.name = "PowerupM" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+	elif powerupSelection <= 3:
+		var loadingPowerup = bulletPowerPreload.instantiate()
+		loadingPowerup.position.x = posX
+		loadingPowerup.position.y = posY
+		loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+	elif powerupSelection <= 1:
+		var loadingPowerup = healthPowerPreload.instantiate()
+		loadingPowerup.position.x = posX
+		loadingPowerup.position.y = posY
+		loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+	else:
+		var loadingPowerup = manaPowerPreload.instantiate()
+		loadingPowerup.position.x = posX
+		loadingPowerup.position.y = posY
+		loadingPowerup.name = "PowerupR" + str(powerupsAvaliable + 1)
+		add_child(loadingPowerup)
+
 func reroll_song():
 	randomize()
 	var newSong = randi_range(1, songAmount)
@@ -68,7 +132,7 @@ func play_song():
 func checkForPowerups():
 	powerupsAvaliable = 0
 	for child in get_children(false):
-		if child is Powerup:
+		if child.is_in_group("powerup"):
 			powerupsAvaliable += 1
 
 func summon_enemy():
@@ -109,13 +173,19 @@ func _ready():
 
 func _physics_process(delta):
 	
+	$DebugScreen/Control/FPS.text = "FPS: " + str(Engine.get_frames_per_second())
+	
 	$Noise.visible = GameData.spaceBackground
 	
 	$Player/Camera2D/CanvasLayer/CRTEffect.visible = GameData.crtShader
 	
 	$CanvasLayer/Control2/ProgressBar.max_value = player.maxHealth
 	
-	$CanvasLayer/Control2/ProgressBar.value = player.health
+	$CanvasLayer/Control2/ProgressBar.value = lerp($CanvasLayer/Control2/ProgressBar.value, float(player.health), 0.75)
+	
+	$CanvasLayer/Control2/ManaBar.max_value = player.maxMana
+	
+	$CanvasLayer/Control2/ManaBar.value = lerp($CanvasLayer/Control2/ManaBar.value, float(player.mana), 0.75)
 	
 	if enemiesKilled == enemiesRequired and waveOn:
 		waveOn = false
@@ -134,6 +204,8 @@ func _physics_process(delta):
 	else:
 		$PauseLayer.visible = false
 		
+	player.mana = lerp(float(player.mana), float(player.maxMana), 0.0005)
+	
 	if gamePaused == true:
 		controllerCursor.forward_keybind = "joypad_forward"
 		controllerCursor.backward_keybind = "joypad_backward"
@@ -172,22 +244,7 @@ func _on_spawn_timer_timeout():
 func _on_powerup_timer_timeout():
 	checkForPowerups()
 	if powerupsAvaliable <= 2:
-		randomize()
-		var powerupSelection = randi_range(1,3)
-		
-		if powerupSelection >= 2:
-			var loadingPowerup = bulletPowerPreload.instantiate()
-			loadingPowerup.position.x = randi_range(-1168, 1740)
-			loadingPowerup.position.y = randi_range(-519, 946)
-			loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
-			add_child(loadingPowerup)
-		
-		if powerupSelection >= 1:
-			var loadingPowerup = healthPowerPreload.instantiate()
-			loadingPowerup.position.x = randi_range(-1168, 1740)
-			loadingPowerup.position.y = randi_range(-519, 946)
-			loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
-			add_child(loadingPowerup)
+		spawnPowerup()
 
 
 func _on_unpause_button_button_up():
