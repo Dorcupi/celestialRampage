@@ -37,8 +37,6 @@ func save():
 	
 	save_game.store_line(json_string)
 	
-	print("SAVED")
-	
 func load_game():
 	if not FileAccess.file_exists("user://settings.save"):
 		return # Error! We don't have a save to load.
@@ -88,10 +86,14 @@ func fullscreen_toggle(button_pressed):
 	fullscreen = button_pressed
 	
 	if button_pressed == false:
-		DisplayServer.window_set_mode(lastMode)
+		if lastMode != 3:
+			DisplayServer.window_set_mode(lastMode)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	else:
 		lastMode = DisplayServer.window_get_mode()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	save()
 
 func onLoad():
 	await load_game()
@@ -126,7 +128,4 @@ func _physics_process(delta):
 	
 	AudioServer.set_bus_volume_db(music_id, linear_to_db(musicVolume))
 	AudioServer.set_bus_mute(music_id, musicVolume < 0.05)
-	
-	if fullscreen == true:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	

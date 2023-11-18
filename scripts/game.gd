@@ -152,8 +152,6 @@ func summon_enemy():
 	e.get_node("Polygon2D").set_material(clonedMa)
 	
 	add_child(e)
-	
-	print("SUCCESS")
 
 func summon_enemies(enemyAmount):
 	for i in range(enemyAmount):
@@ -212,14 +210,12 @@ func _physics_process(delta):
 		controllerCursor.left_keybind = "joypad_left"
 		controllerCursor.right_keybind = "joypad_right"
 		controllerCursor.click_keybind = "joypad_click_event"
-		print(controllerCursor.click_keybind)
 	else:
 		controllerCursor.forward_keybind = "joypad_rotate_forward"
 		controllerCursor.backward_keybind = "joypad_rotate_backward"
 		controllerCursor.left_keybind = "joypad_rotate_left"
 		controllerCursor.right_keybind = "joypad_rotate_right"
 		controllerCursor.click_keybind = ""
-		print(controllerCursor.click_keybind)
 
 
 func _on_cooldown_timer_timeout():

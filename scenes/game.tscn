@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://0mgtt1wpiua0"]
+[gd_scene load_steps=23 format=3 uid="uid://0mgtt1wpiua0"]
 
 [ext_resource type="PackedScene" uid="uid://c6utkoh2wobe0" path="res://characters/player.tscn" id="1_3ds0p"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_q0xx5"]
@@ -172,6 +172,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_hrcdu"]
+font = ExtResource("4_02fjl")
+font_size = 75
 
 [sub_resource type="LabelSettings" id="LabelSettings_vmbso"]
 font = ExtResource("9_83g1e")
@@ -368,7 +372,7 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_uedl1")
 theme_override_styles/hover = SubResource("StyleBoxFlat_el7br")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_a1n5s")
-text = "Unpause"
+text = "Resume"
 
 [node name="ExitButton" type="Button" parent="PauseLayer/Control"]
 layout_mode = 0
@@ -383,18 +387,15 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_el7br")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_a1n5s")
 text = "Exit"
 
-[node name="Paused" type="Label" parent="PauseLayer/Control"]
-process_mode = 3
+[node name="Label" type="Label" parent="PauseLayer/Control"]
 layout_mode = 0
-offset_left = 671.0
-offset_top = 324.5
-offset_right = 968.0
-offset_bottom = 389.5
-text = "Paused"
-label_settings = SubResource("LabelSettings_joe8u")
+offset_left = 638.0
+offset_top = 317.5
+offset_right = 996.0
+offset_bottom = 412.5
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_hrcdu")
 horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 process_mode = 1

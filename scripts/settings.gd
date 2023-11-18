@@ -2,18 +2,13 @@ extends Node2D
 
 var fadeForwards = true
 
-func fullscreenCheck():
-	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
-		$CanvasLayer/Control/VBoxContainer/FullscreenButton.button_pressed = true
-	else:
-		$CanvasLayer/Control/VBoxContainer/FullscreenButton.button_pressed = false
-
 func _ready():
+	
+	GameData.load_game()
+	
 	$CanvasLayer/Control/VBoxContainer/SpaceBackgroundButton.button_pressed = GameData.spaceBackground
 	
 	$CanvasLayer/Control/VBoxContainer/CRTEffectButton.button_pressed = GameData.crtShader
-	
-	fullscreenCheck()
 	
 	fadeForwards = true
 	
@@ -47,6 +42,8 @@ func _on_rumble_button_toggled(button_pressed):
 
 func _on_exit_button_up():
 	fadeForwards = false
+	await GameData.save()
+	print("SAVED")
 	$AnimationPlayer.play_backwards("fade_out")
 
 
@@ -54,16 +51,9 @@ func _on_animation_player_animation_finished(anim_name):
 	if fadeForwards == false:
 		get_tree().change_scene_to_file(GameData.lastScene)
 
-
-func _on_music_slider_drag_ended(value_changed):
-	if value_changed:
-		GameData.musicVolume = $CanvasLayer/Control/VBoxContainer/MusicSlider/MusicSlider.value
-
-
-func _on_sfx_slider_drag_ended(value_changed):
-	if value_changed:
-		GameData.sfxVolume = $CanvasLayer/Control/VBoxContainer/SFXSlider/SFXSlider.value
-
-
 func _on_music_slider_value_changed(value):
-	pass # Replace with function body.
+	GameData.musicVolume = value
+
+
+func _on_sfx_slider_value_changed(value):
+	GameData.sfxVolume = value
