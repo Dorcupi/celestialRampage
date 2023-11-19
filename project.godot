@@ -30,9 +30,13 @@ mouse_cursor/custom_image="res://assets/cursorlowsmall.png"
 mouse_cursor/custom_image_hotspot=Vector2(50, 50)
 mouse_cursor/vsync/vsync_mode=0
 
+[editor]
+
+movie_writer/movie_file="C:/Users/ejiog/Videos/Godot Engine/clip.avi"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdfxr/plugin.cfg", "res://addons/shaker/plugin.cfg")
+enabled=PackedStringArray("res://addons/LPCAnimatedSprite/plugin.cfg", "res://addons/gdfxr/plugin.cfg", "res://addons/shaker/plugin.cfg")
 
 [input]
 

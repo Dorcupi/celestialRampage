@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal sprite_animation_finished(anim_name)
+
 @export var forward_keybind = "forward"
 
 @export var backward_keybind = "backward"
@@ -31,16 +33,27 @@ var mouse_position
 
 var attackDamage = 5
 
+var animDirection = 1
+
+var walking = false
+
+var shooting = false
+
 @onready var bullet = preload("res://characters/bullet.tscn")
 
+@onready var sprite = $Sprite
+
+@onready var clonedMa = sprite.get_material().duplicate()
+
 func _ready():
+	
+	connect("sprite_animation_finished", Callable(self, "_on_current_animation_finished"))
+	
 	health = maxHealth
 	
 	mana = maxMana
 	
-	var clonedMa =$Polygon2D.get_material().duplicate()
-	
-	$Polygon2D.set_material(clonedMa)
+	sprite.set_material(clonedMa)
 
 func dash():
 	speed = speed * 3
@@ -54,12 +67,13 @@ func hit(damage):
 	else:
 		$Shaker.start()
 		$HurtSound.play()
-		$Polygon2D.get_material().set_shader_parameter('active',true)
+		sprite.get_material().set_shader_parameter('active',true)
 		$FlashTimer.start()
 		if $CursorLayer/ControllerCursor.mouse_used == false:
 			if GameData.controllerRumble:
 				for i in Input.get_connected_joypads():
 					Input.start_joy_vibration(i, 1, 1, 0.2)
+
 
 func get_input():
 	
@@ -70,66 +84,89 @@ func get_input():
 func _process(delta):
 	mouse_position = get_global_mouse_position()
 	
-	look_at(mouse_position)
+	$ShootPositions.look_at(mouse_position)
 
 func _physics_process(delta):
 		
-	if global_rotation >= 3:
-		$CPUParticles2D.gravity.x = 980
-		$CPUParticles2D.gravity.y = 0
-	elif global_rotation >= 1.99:
-		$CPUParticles2D.gravity.x = 0
-		$CPUParticles2D.gravity.y = -980
-	elif global_rotation >= 0.99:
-		$CPUParticles2D.gravity.x = 0
-		$CPUParticles2D.gravity.y = -980
-	elif global_rotation >= -0:
-		$CPUParticles2D.gravity.x = -980
-		$CPUParticles2D.gravity.y = 0
-	elif global_rotation >= -1:
-		$CPUParticles2D.gravity.x = -980
-		$CPUParticles2D.gravity.y = 0
-	elif global_rotation >= -2:
-		$CPUParticles2D.gravity.x = 0
-		$CPUParticles2D.gravity.y = 980
-	elif global_rotation >= -3.99:
-		$CPUParticles2D.gravity.x = 980
-		$CPUParticles2D.gravity.y = 0
-	else:
-		$CPUParticles2D.gravity.x = 0
-		$CPUParticles2D.gravity.y = 980
-	
 	get_input()
+	
+	if Input.is_action_pressed(right_keybind):
+		animDirection = 1
+	elif Input.is_action_pressed(left_keybind):
+		animDirection = 2
+	if Input.is_action_pressed(backward_keybind):
+		animDirection = 3
+	elif Input.is_action_pressed(forward_keybind):
+		animDirection = 4
+	
+	if Input.is_action_pressed(right_keybind):
+		walking = true
+	elif Input.is_action_pressed(left_keybind):
+		walking = true
+	elif Input.is_action_pressed(backward_keybind):
+		walking = true
+	elif Input.is_action_pressed(forward_keybind):
+		walking = true
+	else:
+		walking = false
+	
+	if animDirection == 1 and walking == true:
+		sprite.play("WALK_RIGHT")
+	elif animDirection == 2 and walking == true:
+		sprite.play("WALK_LEFT")
+	elif animDirection == 3 and walking == true:
+		sprite.play("WALK_DOWN")
+	elif animDirection == 4 and walking == true:
+		sprite.play("WALK_UP")
+	elif animDirection == 1 and shooting == false:
+		sprite.play("IDLE_RIGHT")
+	elif animDirection == 2 and shooting == false:
+		sprite.play("IDLE_LEFT")
+	elif animDirection == 3 and shooting == false:
+		sprite.play("IDLE_DOWN")
+	elif animDirection == 4 and shooting == false:
+		sprite.play("IDLE_UP")
 	
 	if Input.is_action_just_pressed(shoot_keybind):
 		
+		shooting = true
+		
+		if animDirection == 1:
+			sprite.play("SHOOT_RIGHT")
+		elif animDirection == 2:
+			sprite.play("SHOOT_LEFT")
+		elif animDirection == 3:
+			sprite.play("SHOOT_DOWN")
+		elif animDirection == 4:
+			sprite.play("SHOOT_UP")
+		
 		var b = bullet.instantiate()
-		b.start($ShootPos.global_position, rotation, attackDamage, self)
+		b.start($ShootPositions/ShootPos.global_position, $ShootPositions.rotation, attackDamage, self)
 		get_tree().root.add_child(b)
 		$ShootSound.play()
 		
 		if shootLevel >= 2:
 			
 			var c = bullet.instantiate()
-			c.start($ShootPos2.global_position, rotation, attackDamage, self)
+			c.start($ShootPositions/ShootPos2.global_position, $ShootPositions.rotation, attackDamage, self)
 			get_tree().root.add_child(c)
 			
 		if shootLevel >= 3:
 			
 			var d = bullet.instantiate()
-			d.start($ShootPos3.global_position, rotation, attackDamage, self)
+			d.start($ShootPositions/ShootPos3.global_position, $ShootPositions.rotation, attackDamage, self)
 			get_tree().root.add_child(d)
 		
 		if shootLevel >= 4:
 			
 			var e = bullet.instantiate()
-			e.start($ShootPos4.global_position, rotation, attackDamage, self)
+			e.start($ShootPositions/ShootPos4.global_position, $ShootPositions.rotation, attackDamage, self)
 			get_tree().root.add_child(e)
 			
 		if shootLevel >= 5:
 			
 			var f = bullet.instantiate()
-			f.start($ShootPos5.global_position, rotation, attackDamage, self)
+			f.start($ShootPositions/ShootPos5.global_position, $ShootPositions.rotation, attackDamage, self)
 			get_tree().root.add_child(f)
 			
 	if Input.is_action_just_pressed(dash_keybind):
@@ -141,7 +178,7 @@ func _physics_process(delta):
 
 
 func _on_flash_timer_timeout():
-	$Polygon2D.get_material().set_shader_parameter('active',false)
+	sprite.get_material().set_shader_parameter('active',false)
 
 
 func _on_shoot_power_timer_timeout():
@@ -150,3 +187,17 @@ func _on_shoot_power_timer_timeout():
 func _on_dash_timer_timeout():
 	speed = 300
 	$Camera2D/CanvasLayer/DashEffect.visible = false
+
+
+func _on_sprite_animation_finished():
+	emit_signal("sprite_animation_finished", $Sprite.animation)
+
+func _on_current_animation_finished(anim_name: String) -> void:
+	if anim_name == "SHOOT_UP":
+		shooting = false
+	elif anim_name == "SHOOT_DOWN":
+		shooting = false
+	elif anim_name == "SHOOT_LEFT":
+		shooting = false
+	elif anim_name == "SHOOT_RIGHT":
+		shooting = false
