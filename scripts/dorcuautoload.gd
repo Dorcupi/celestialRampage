@@ -116,7 +116,8 @@ func _notification(notif):
 		exit()
 
 func _ready():
-	pass
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		fullscreen == true
 
 func _physics_process(delta):
 	

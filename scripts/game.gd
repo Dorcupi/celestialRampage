@@ -52,28 +52,40 @@ func spawnPowerup():
 	randomize()
 	var powerupSelection = randi_range(0,7)
 	
-	if powerupSelection <= 5:
+	if powerupSelection >= 4:
 		var loadingPowerup = manaPowerPreload.instantiate()
-		loadingPowerup.position.x = randi_range(-1168, 1740)
-		loadingPowerup.position.y = randi_range(-519, 946)
+		var spawnPoints = $SpawnPositions.get_child_count()
+		var spawnPoint = randi_range(1, spawnPoints)
+		spawnPoint = $SpawnPositions.get_child(spawnPoint)
+		var newPos = spawnPoint.global_position
+		loadingPowerup.position = newPos
 		loadingPowerup.name = "PowerupM" + str(powerupsAvaliable + 1)
 		add_child(loadingPowerup)
-	elif powerupSelection <= 3:
+	elif powerupSelection >= 2:
 		var loadingPowerup = bulletPowerPreload.instantiate()
-		loadingPowerup.position.x = randi_range(-1168, 1740)
-		loadingPowerup.position.y = randi_range(-519, 946)
+		var spawnPoints = $SpawnPositions.get_child_count()
+		var spawnPoint = randi_range(1, spawnPoints)
+		spawnPoint = $SpawnPositions.get_child(spawnPoint)
+		var newPos = spawnPoint.global_position
+		loadingPowerup.position = newPos
 		loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
 		add_child(loadingPowerup)
-	elif powerupSelection <= 1:
+	elif powerupSelection >= 0:
 		var loadingPowerup = healthPowerPreload.instantiate()
-		loadingPowerup.position.x = randi_range(-1168, 1740)
-		loadingPowerup.position.y = randi_range(-519, 946)
+		var spawnPoints = $SpawnPositions.get_child_count()
+		var spawnPoint = randi_range(1, spawnPoints)
+		spawnPoint = $SpawnPositions.get_child(spawnPoint)
+		var newPos = spawnPoint.global_position
+		loadingPowerup.position = newPos
 		loadingPowerup.name = "PowerupH" + str(powerupsAvaliable + 1)
 		add_child(loadingPowerup)
 	else:
 		var loadingPowerup = manaPowerPreload.instantiate()
-		loadingPowerup.position.x = randi_range(-1168, 1740)
-		loadingPowerup.position.y = randi_range(-519, 946)
+		var spawnPoints = $SpawnPositions.get_child_count()
+		var spawnPoint = randi_range(1, spawnPoints)
+		spawnPoint = $SpawnPositions.get_child(spawnPoint)
+		var newPos = spawnPoint.global_position
+		loadingPowerup.position = newPos
 		loadingPowerup.name = "PowerupR" + str(powerupsAvaliable + 1)
 		add_child(loadingPowerup)
 
@@ -81,19 +93,19 @@ func debugPowerup(posX: int, posY: int):
 	randomize()
 	var powerupSelection = randi_range(1,6)
 	
-	if powerupSelection <= 5:
+	if powerupSelection >= 4:
 		var loadingPowerup = manaPowerPreload.instantiate()
 		loadingPowerup.position.x = posX
 		loadingPowerup.position.y = posY
 		loadingPowerup.name = "PowerupM" + str(powerupsAvaliable + 1)
 		add_child(loadingPowerup)
-	elif powerupSelection <= 3:
+	elif powerupSelection >= 2:
 		var loadingPowerup = bulletPowerPreload.instantiate()
 		loadingPowerup.position.x = posX
 		loadingPowerup.position.y = posY
 		loadingPowerup.name = "PowerupB" + str(powerupsAvaliable + 1)
 		add_child(loadingPowerup)
-	elif powerupSelection <= 1:
+	elif powerupSelection >= 0:
 		var loadingPowerup = healthPowerPreload.instantiate()
 		loadingPowerup.position.x = posX
 		loadingPowerup.position.y = posY
@@ -137,19 +149,21 @@ func checkForPowerups():
 
 func summon_enemy():
 	
-	var x = randi_range(-1168, 1740)
+	var spawnPoints = $SpawnPositions.get_child_count()
 	
-	var y = randi_range(-519, 946)
+	var spawnPoint = randi_range(1, spawnPoints)
+	
+	spawnPoint = $SpawnPositions.get_child(spawnPoint)
+	
+	var newPos = spawnPoint.global_position
 	
 	var e = enemyPreload.instantiate()
 	
-	e.position.x = x
+	e.position = newPos
 	
-	e.position.y = y
+	var clonedMa = e.get_node("Sprite").get_material().duplicate()
 	
-	var clonedMa = e.get_node("Polygon2D").get_material().duplicate()
-	
-	e.get_node("Polygon2D").set_material(clonedMa)
+	e.get_node("Sprite").set_material(clonedMa)
 	
 	add_child(e)
 
@@ -173,7 +187,11 @@ func _physics_process(delta):
 	
 	$DebugScreen/Control/FPS.text = "FPS: " + str(Engine.get_frames_per_second())
 	
+	$DebugScreen/Control/Arch.text = "Running on " + str(Engine.get_architecture_name())
+	
 	$Noise.visible = GameData.spaceBackground
+	
+	$Stars.visible = GameData.spaceBackground
 	
 	$Player/Camera2D/CanvasLayer/CRTEffect.visible = GameData.crtShader
 	
@@ -271,3 +289,12 @@ func _on_background_music_finished():
 
 func _on_music_timer_timeout():
 	play_song()
+
+
+func _on_insta_death_button_up():
+	$DebugScreen.visible = false
+	$Player.hit(100)
+
+
+func _on_powerup_button_up():
+	debugPowerup($Player.global_position.x, $Player.global_position.x)

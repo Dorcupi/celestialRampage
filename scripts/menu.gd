@@ -8,7 +8,7 @@ var scenePath = "res://scenes/menu.tscn"
 
 
 func _ready():
-	pass # Replace with function body.
+	$AnimationPlayer.play("fade_in")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -43,7 +43,6 @@ func _on_rumble_button_toggled(button_pressed):
 func _on_exit_button_up():
 	fadeForwards = false
 	await GameData.save()
-	print("SAVED")
 	$AnimationPlayer.play_backwards("fade_out")
 
 

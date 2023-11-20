@@ -1370,14 +1370,137 @@ shader = ExtResource("3_tcru5")
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.208738, 0), -5.00405, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_dpxhk"]
-
 [sub_resource type="Animation" id="Animation_pjm2x"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera2D:zoom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.7, 0.7)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera2D/CanvasLayer/DeathFade:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vf1an"]
+resource_name = "death"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.207843, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.4, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera2D:zoom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.7, 0.7), Vector2(1, 1), Vector2(1, 1), Vector2(0.7, 0.7)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera2D/CanvasLayer/DeathFade:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.8, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6iip0"]
 _data = {
-"RESET": SubResource("Animation_pjm2x")
+"RESET": SubResource("Animation_pjm2x"),
+"death": SubResource("Animation_vf1an")
 }
 
 [node name="Player" type="CharacterBody2D"]
@@ -1389,7 +1512,7 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_aapj0")
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_kwccs")
-animation = &"SLASH_DOWN"
+animation = &"SHOOT_RIGHT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, 6)
@@ -1415,6 +1538,13 @@ offset_top = -13683.0
 offset_right = 21986.0
 offset_bottom = 14010.0
 
+[node name="DeathFade" type="ColorRect" parent="Camera2D/CanvasLayer"]
+offset_left = -20351.0
+offset_top = -13683.0
+offset_right = 21986.0
+offset_bottom = 14010.0
+color = Color(0, 0, 0, 0)
+
 [node name="DashEffect" type="ColorRect" parent="Camera2D/CanvasLayer"]
 visible = false
 anchors_preset = 15
@@ -1434,19 +1564,19 @@ color = Color(0, 1, 1, 0.121569)
 position = Vector2(6, 9)
 
 [node name="ShootPos" type="Marker2D" parent="ShootPositions"]
-position = Vector2(80, -10)
+position = Vector2(100, -10)
 
 [node name="ShootPos2" type="Marker2D" parent="ShootPositions"]
-position = Vector2(80, -25)
+position = Vector2(100, -25)
 
 [node name="ShootPos3" type="Marker2D" parent="ShootPositions"]
-position = Vector2(80, 10)
+position = Vector2(100, 10)
 
 [node name="ShootPos4" type="Marker2D" parent="ShootPositions"]
-position = Vector2(80, 31)
+position = Vector2(100, 31)
 
 [node name="ShootPos5" type="Marker2D" parent="ShootPositions"]
-position = Vector2(80, -41)
+position = Vector2(100, -41)
 
 [node name="Shaker" type="Node" parent="." node_paths=PackedStringArray("target_node")]
 script = ExtResource("2_dwqnm")
@@ -1478,16 +1608,41 @@ one_shot = true
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeBlendSpace2D_dpxhk")
-parameters/blend_position = Vector2(0, 0)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_6iip0")
 }
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1000
+lifetime = 2.0
+preprocess = 0.1
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+angular_velocity_max = 100.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color = Color(0.207843, 0, 0, 1)
+anim_offset_max = 0.5
+
+[node name="DeathShakeTimer" type="Timer" parent="."]
+wait_time = 1.4
+one_shot = true
+
 [connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
 [connection signal="timeout" from="ShootPowerTimer" to="." method="_on_shoot_power_timer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
+[connection signal="timeout" from="DeathShakeTimer" to="." method="_on_death_shake_timer_timeout"]

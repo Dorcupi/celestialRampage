@@ -11,9 +11,16 @@ config_version=5
 [application]
 
 config/name="Celestial Rampage"
-run/main_scene="res://scenes/menu.tscn"
+config/description="top-down shooter go brrrrrrr.
+[v] top-down
+[v] shoot stuff
+[v] enemies
+[v] space
+[  ] fraud"
+run/main_scene="res://scenes/splash.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
-boot_splash/bg_color=Color(0.0352941, 0.392157, 0.223529, 1)
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +30,7 @@ GameData="*res://scripts/dorcuautoload.gd"
 
 [display]
 
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=2

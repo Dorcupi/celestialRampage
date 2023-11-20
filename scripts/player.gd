@@ -63,7 +63,18 @@ func dash():
 func hit(damage):
 	health = health - damage
 	if health <= 0:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_parent().waveOn = false
+		get_parent().get_node("CanvasLayer/Control").visible = false
+		get_parent().get_node("CanvasLayer/Control2").visible = false
+		get_parent().get_node("Stars").visible = false
+		get_parent().get_node("Noise").visible = false
+		for node in get_parent().get_children():
+			if node is Enemy:
+				node.queue_free()
+		for node in get_parent().get_children():
+			if node is Bullet:
+				node.queue_free()
+		$AnimationPlayer.play("death")
 	else:
 		$Shaker.start()
 		$HurtSound.play()
@@ -201,3 +212,18 @@ func _on_current_animation_finished(anim_name: String) -> void:
 		shooting = false
 	elif anim_name == "SHOOT_RIGHT":
 		shooting = false
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "death":
+		get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _on_animation_player_animation_started(anim_name):
+	if anim_name == "death":
+		$DeathShakeTimer.start(1.4)
+
+
+func _on_death_shake_timer_timeout():
+	$Shaker.start()
+	get_parent().get_node("TileMap").modulate = Color("ffffff7a")

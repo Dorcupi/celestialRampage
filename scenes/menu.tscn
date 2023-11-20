@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cqd2paew7drrx"]
+[gd_scene load_steps=20 format=3 uid="uid://cqd2paew7drrx"]
 
 [ext_resource type="Texture2D" uid="uid://c7jqhj40ap7y1" path="res://assets/wood.jpg" id="1_dcavm"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_hevjt"]
@@ -124,9 +124,26 @@ tracks/1/keys = {
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_o1gan"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5ykvs"]
 _data = {
 "RESET": SubResource("Animation_850m5"),
+"fade_in": SubResource("Animation_o1gan"),
 "zoom_in": SubResource("Animation_o5nhs")
 }
 
