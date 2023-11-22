@@ -5857,7 +5857,7 @@ shadow_size = 22
 shadow_color = Color(0, 0, 0, 0.215686)
 shadow_offset = Vector2(3, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2k074"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50htc"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -5867,7 +5867,7 @@ shadow_color = Color(0, 0, 0, 0.372549)
 shadow_size = 9
 shadow_offset = Vector2(5, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhmnl"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqyvl"]
 bg_color = Color(0.741176, 0, 0, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -5877,7 +5877,7 @@ shadow_color = Color(0, 0, 0, 0.152941)
 shadow_size = 9
 shadow_offset = Vector2(5, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwgnt"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72a8n"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -5887,7 +5887,7 @@ shadow_color = Color(0, 0, 0, 0.372549)
 shadow_size = 9
 shadow_offset = Vector2(5, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nm2m1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3j53"]
 bg_color = Color(0, 0.909804, 1, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -6009,50 +6009,36 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -439.5
-offset_top = -229.0
-offset_right = 439.5
+offset_left = -575.5
+offset_top = -646.0
+offset_right = 575.5
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -163.0
-offset_top = 15.5
-offset_right = 163.0
-offset_bottom = 69.5
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 415.5
+offset_top = 571.0
+offset_right = 741.5
+offset_bottom = 625.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_02fjl")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/background = SubResource("StyleBoxFlat_2k074")
-theme_override_styles/fill = SubResource("StyleBoxFlat_dhmnl")
+theme_override_styles/background = SubResource("StyleBoxFlat_50htc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bqyvl")
 value = 37.0
 
 [node name="ManaBar" type="ProgressBar" parent="CanvasLayer/Control2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -163.0
-offset_top = -54.5
-offset_right = 163.0
-offset_bottom = -0.5
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 414.5
+offset_top = 503.0
+offset_right = 740.5
+offset_bottom = 557.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_02fjl")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/background = SubResource("StyleBoxFlat_xwgnt")
-theme_override_styles/fill = SubResource("StyleBoxFlat_nm2m1")
+theme_override_styles/background = SubResource("StyleBoxFlat_72a8n")
+theme_override_styles/fill = SubResource("StyleBoxFlat_i3j53")
 value = 37.0
 
 [node name="Noise" type="Sprite2D" parent="."]

@@ -1539,10 +1539,10 @@ offset_right = 21986.0
 offset_bottom = 14010.0
 
 [node name="DeathFade" type="ColorRect" parent="Camera2D/CanvasLayer"]
-offset_left = -20351.0
-offset_top = -13683.0
-offset_right = 21986.0
-offset_bottom = 14010.0
+offset_left = -19659.0
+offset_top = -13275.0
+offset_right = 22678.0
+offset_bottom = 14418.0
 color = Color(0, 0, 0, 0)
 
 [node name="DashEffect" type="ColorRect" parent="Camera2D/CanvasLayer"]

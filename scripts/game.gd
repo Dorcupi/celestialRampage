@@ -151,11 +151,11 @@ func summon_enemy():
 	
 	var spawnPoints = $SpawnPositions.get_child_count()
 	
-	var spawnPoint = randi_range(1, spawnPoints)
+	var spawnPoint = randi_range(0, spawnPoints)
 	
-	spawnPoint = $SpawnPositions.get_child(spawnPoint)
+	var spawnKid = $SpawnPositions.get_child(spawnPoint)
 	
-	var newPos = spawnPoint.global_position
+	var newPos = spawnKid.global_position
 	
 	var e = enemyPreload.instantiate()
 	
@@ -234,7 +234,6 @@ func _physics_process(delta):
 		controllerCursor.left_keybind = "joypad_rotate_left"
 		controllerCursor.right_keybind = "joypad_rotate_right"
 		controllerCursor.click_keybind = ""
-
 
 func _on_cooldown_timer_timeout():
 	wave += 1
