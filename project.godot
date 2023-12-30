@@ -18,7 +18,7 @@ config/description="top-down shooter go brrrrrrr.
 [v] space
 [  ] fraud"
 run/main_scene="res://scenes/splash.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 config/icon="res://icon.svg"

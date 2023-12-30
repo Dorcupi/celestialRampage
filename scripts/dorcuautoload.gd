@@ -79,7 +79,10 @@ func load_game():
 		if fullscreen == true:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		else:
-			DisplayServer.window_set_mode(lastMode)
+			if lastMode:
+				DisplayServer.window_set_mode(lastMode)
+			else:
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 
 func fullscreen_toggle(button_pressed):
 	
@@ -100,7 +103,10 @@ func onLoad():
 	if fullscreen == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
-		DisplayServer.window_set_mode(lastMode)
+		if lastMode:
+			DisplayServer.window_set_mode(lastMode)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 	get_tree().set_auto_accept_quit(false)
 	gameLoaded = true
 
