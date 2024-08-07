@@ -45,7 +45,7 @@ movie_writer/movie_file="C:/Users/ejiog/Videos/Godot Engine/clip.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/LPCAnimatedSprite/plugin.cfg", "res://addons/gdfxr/plugin.cfg", "res://addons/shaker/plugin.cfg")
+enabled=PackedStringArray("res://addons/LPCAnimatedSprite/plugin.cfg", "res://addons/gdfxr/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg", "res://addons/shaker/plugin.cfg")
 
 [input]
 
