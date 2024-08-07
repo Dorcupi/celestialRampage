@@ -1380,6 +1380,33 @@ min_value = -1.0
 _data = [Vector2(0.0517928, -0.810526), 0.0, 0.0, 0, 0, Vector2(0.960159, 0.221053), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Animation" id="Animation_7kdc2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_pww6u"]
 resource_name = "spawn"
 length = 1.5
@@ -1408,33 +1435,6 @@ tracks/1/keys = {
 "values": [true, true, false]
 }
 
-[sub_resource type="Animation" id="Animation_7kdc2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SpawnParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dgn5v"]
 _data = {
 "RESET": SubResource("Animation_7kdc2"),
@@ -1450,7 +1450,7 @@ script = ExtResource("1_e2ffx")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 process_mode = 3
 navigation_layers = 3
-path_postprocessing = 1
+debug_enabled = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

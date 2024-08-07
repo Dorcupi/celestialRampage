@@ -67,6 +67,8 @@ func _physics_process(_delta: float) -> void:
 	
 	var newVol: Vector2 = nav_agent.get_next_path_position() - global_position
 	
+	newVol = newVol / 8
+	
 	newVol = newVol.normalized()
 	
 	newVol = newVol * speed

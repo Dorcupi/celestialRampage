@@ -151,7 +151,7 @@ func summon_enemy():
 	
 	var spawnPoints = $SpawnPositions.get_child_count()
 	
-	var spawnPoint = randi_range(0, spawnPoints)
+	var spawnPoint = randi_range(0, spawnPoints - 1)
 	
 	var spawnKid = $SpawnPositions.get_child(spawnPoint)
 	
