@@ -65,7 +65,7 @@ func hit(damage):
 	if health <= 0:
 		get_parent().waveOn = false
 		get_parent().get_node("CanvasLayer/Control").visible = false
-		$CanvasLayer/Control2.visible = false
+		get_parent().get_node("CanvasLayer/Control2").visible = false
 		get_parent().get_node("Stars").visible = false
 		get_parent().get_node("Noise").visible = false
 		for node in get_parent().get_children():
