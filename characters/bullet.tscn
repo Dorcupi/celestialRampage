@@ -1,6 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkdxdbil6koas"]
+[gd_scene load_steps=12 format=3 uid="uid://bkdxdbil6koas"]
 
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_j683g"]
+[ext_resource type="Texture2D" uid="uid://buv3s7p8g3ixq" path="res://assets/bulletgreen/green3.png" id="2_3tefh"]
+[ext_resource type="Texture2D" uid="uid://doypcpphflnic" path="res://assets/bulletgreen/green1.png" id="3_beodf"]
+[ext_resource type="Texture2D" uid="uid://cspfrx6hygrpw" path="res://assets/bulletgreen/green2.png" id="4_2ywdt"]
+[ext_resource type="Texture2D" uid="uid://dtbnaouoqylqg" path="res://assets/bulletred/red1.png" id="5_rbqsd"]
+[ext_resource type="Texture2D" uid="uid://c07cvh478oyub" path="res://assets/bulletred/red2.png" id="6_qsaku"]
+[ext_resource type="Texture2D" uid="uid://b5sw17p6tsq1i" path="res://assets/bulletred/red3.png" id="7_yhpsp"]
+
+[sub_resource type="Animation" id="Animation_sox2o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_3tefh")]
+}
+
+[sub_resource type="Animation" id="Animation_aq6wk"]
+resource_name = "spawn_green"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_beodf"), ExtResource("4_2ywdt"), ExtResource("2_3tefh")]
+}
+
+[sub_resource type="Animation" id="Animation_05v4e"]
+resource_name = "spawn_red"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("5_rbqsd"), ExtResource("6_qsaku"), ExtResource("7_yhpsp")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_07y04"]
+_data = {
+"RESET": SubResource("Animation_sox2o"),
+"spawn_green": SubResource("Animation_aq6wk"),
+"spawn_red": SubResource("Animation_05v4e")
+}
 
 [node name="Bullet" type="CharacterBody2D"]
 process_mode = 1
@@ -8,17 +68,22 @@ scale = Vector2(0.8, 0.8)
 motion_mode = 1
 script = ExtResource("1_j683g")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0.0196078, 0.160784, 0.619608, 1)
-polygon = PackedVector2Array(30, 0, 0, 18, -30, 0, 0, -18)
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PackedVector2Array(0, -18, 30, 0, 0, 18, -30, 0)
+polygon = PackedVector2Array(0, -18, 16.25, -17.5, 27.5, -8.75, 30, 0, 27.5, 7.5, 22.5, 15, 15, 17.5, 0, 18, -23.75, 5, -30, 0, -23.75, -5, -12.5, -11.25)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-2.5, -0.625)
 scale = Vector2(4, 2.6875)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(3, 3)
+texture = ExtResource("2_3tefh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_07y04")
+}
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

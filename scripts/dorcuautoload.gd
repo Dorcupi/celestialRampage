@@ -14,7 +14,7 @@ var fullscreen = false
 
 var controllerRumble = true
 
-var lastMode
+var lastMode = 0
 
 var lastScene = "res://scenes/menu.tscn"
 
@@ -74,7 +74,7 @@ func load_game():
 		if node_data.has("lastMode"):
 			lastMode = node_data["lastMode"]
 		else:
-			lastMode = DisplayServer.WINDOW_MODE_WINDOWED
+			lastMode = 0
 		
 		if fullscreen == true:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -82,31 +82,30 @@ func load_game():
 			if lastMode:
 				DisplayServer.window_set_mode(lastMode)
 			else:
-				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+				DisplayServer.window_set_mode(0)
+				lastMode = 0
 
 func fullscreen_toggle(button_pressed):
 	
-	fullscreen = button_pressed
-	
-	if button_pressed == false:
-		if lastMode != 3:
+	var changed = false
+	if button_pressed == false and changed == false:
+		if lastMode:
 			DisplayServer.window_set_mode(lastMode)
+			fullscreen = false
 		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	else:
-		lastMode = DisplayServer.window_get_mode()
+			DisplayServer.window_set_mode(0)
+			lastMode = 0
+			fullscreen = false
+		changed = true
+	if button_pressed == true and changed == false:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	save()
+		fullscreen = true
+		changed = true
+		
+	await save()
 
 func onLoad():
 	await load_game()
-	if fullscreen == true:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		if lastMode:
-			DisplayServer.window_set_mode(lastMode)
-		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 	get_tree().set_auto_accept_quit(false)
 	gameLoaded = true
 
@@ -124,11 +123,15 @@ func _notification(notif):
 func _ready():
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		fullscreen == true
+	get_tree().root.size_changed.connect(_on_size_changed)
 
 func _physics_process(delta):
 	
 	if gameLoaded == false:
-		onLoad()
+		await onLoad()
+		
+	if fullscreen == true and lastMode == 3:
+		lastMode = 0
 	
 	AudioServer.set_bus_volume_db(sfx_id, linear_to_db(sfxVolume))
 	AudioServer.set_bus_mute(sfx_id, sfxVolume < 0.05)
@@ -136,3 +139,7 @@ func _physics_process(delta):
 	AudioServer.set_bus_volume_db(music_id, linear_to_db(musicVolume))
 	AudioServer.set_bus_mute(music_id, musicVolume < 0.05)
 	
+func _on_size_changed():
+	if DisplayServer.window_get_mode() != 3:
+		lastMode = DisplayServer.window_get_mode()
+		print("DETECTED THAT CHANGE!")

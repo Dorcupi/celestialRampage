@@ -7,7 +7,11 @@ var damage = 0
 
 var shooter
 
-func start(_position, _direction, damageAmount, shootPerson):
+func start(_position, _direction, damageAmount, shootPerson, mode):
+	if mode == 1:
+		$AnimationPlayer.play("spawn_red")
+	if mode == 2:
+		$AnimationPlayer.play("spawn_green")
 	rotation = _direction
 	position = _position
 	velocity = Vector2(speed, 0).rotated(rotation)

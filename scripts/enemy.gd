@@ -102,7 +102,7 @@ func update_shooting_state():
 func _on_shoot_timer_timeout():
 	shooting = true
 	var b = bullet.instantiate()
-	b.start($ShootPosition/ShootPos.global_position, $ShootPosition.rotation, attack_damage, self)
+	b.start($ShootPosition/ShootPos.global_position, $ShootPosition.rotation, attack_damage, self, 1)
 	get_tree().root.add_child(b)
 	update_shoot_animation()
 

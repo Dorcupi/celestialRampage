@@ -31,7 +31,6 @@ GameData="*res://scripts/dorcuautoload.gd"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=2
@@ -153,4 +152,5 @@ debug_key={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"

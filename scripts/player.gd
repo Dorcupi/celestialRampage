@@ -152,32 +152,32 @@ func _physics_process(delta):
 			sprite.play("SHOOT_UP")
 		
 		var b = bullet.instantiate()
-		b.start($ShootPositions/ShootPos.global_position, $ShootPositions.rotation, attackDamage, self)
+		b.start($ShootPositions/ShootPos.global_position, $ShootPositions.rotation, attackDamage, self, 1)
 		get_tree().root.add_child(b)
 		$ShootSound.play()
 		
 		if shootLevel >= 2:
 			
 			var c = bullet.instantiate()
-			c.start($ShootPositions/ShootPos2.global_position, $ShootPositions.rotation, attackDamage, self)
+			c.start($ShootPositions/ShootPos2.global_position, $ShootPositions.rotation, attackDamage, self, 1)
 			get_tree().root.add_child(c)
 			
 		if shootLevel >= 3:
 			
 			var d = bullet.instantiate()
-			d.start($ShootPositions/ShootPos3.global_position, $ShootPositions.rotation, attackDamage, self)
+			d.start($ShootPositions/ShootPos3.global_position, $ShootPositions.rotation, attackDamage, self, 1)
 			get_tree().root.add_child(d)
 		
 		if shootLevel >= 4:
 			
 			var e = bullet.instantiate()
-			e.start($ShootPositions/ShootPos4.global_position, $ShootPositions.rotation, attackDamage, self)
+			e.start($ShootPositions/ShootPos4.global_position, $ShootPositions.rotation, attackDamage, self, 1)
 			get_tree().root.add_child(e)
 			
 		if shootLevel >= 5:
 			
 			var f = bullet.instantiate()
-			f.start($ShootPositions/ShootPos5.global_position, $ShootPositions.rotation, attackDamage, self)
+			f.start($ShootPositions/ShootPos5.global_position, $ShootPositions.rotation, attackDamage, self, 1)
 			get_tree().root.add_child(f)
 			
 	if Input.is_action_just_pressed(dash_keybind):
